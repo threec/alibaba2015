@@ -2,3 +2,5 @@
 *.rar
 *.zip
 *.pyc
+*.model
+*.ipynb
