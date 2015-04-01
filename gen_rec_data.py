@@ -14,7 +14,7 @@ else:
 	fout = 'submit.csv'
 
 # load model
-import model1 as model
+import model4 as model
 
 clf = model.GetModel()
 

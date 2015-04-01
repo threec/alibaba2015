@@ -40,5 +40,8 @@
 	best score 0.0201229461605
 	best parms {'C': 0.0001, 'class_weight': {0: 1, 1: 70}}
 
-## model4
+## model4 
+	常数项，	用户最后一天行为量，用户最后一天对该分类行为量，用户转化率 logistic回归 
 	
+	best score 0.0217000122114
+	best parms {'C': 0.0021544346900318821, 'class_weight': {0: 1, 1: 120}}
