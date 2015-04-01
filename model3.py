@@ -11,22 +11,21 @@ def GetData():
 	
 	data = pandas.read_csv('data.csv.subset.csv')
 	
-	data['item_to_cat_rate'] = data['user_item_lastday_count'] / (1 + data['user_cat_lastday_count'])
-	data['user_item_lastday_count'] = np.log(0.3+data['user_item_lastday_count'])
 	
-	X=data[['user_item_lastday_count','item_to_cat_rate']].as_matrix()
+	X=GetFeature(data)
 	
 	
 	Y=data['buy'].as_matrix()
 	
 	return X, Y
 	
-def GetFeature(data, header_dict):
-	x = [float(data[header_dict[i]][0]) for i in ['user_item_lastday_count','user_cat_lastday_count'] ]
+def GetFeature(data):
+	data['item_to_cat_rate'] = data['user_item_lastday_count'] / (1 + data['user_cat_lastday_count'])
+	data['user_item_lastday_count'] = np.log(0.3+data['user_item_lastday_count'])
 	
-	x[1] = x[0]/(1+x[1])
-	x[0] = np.log(0.3+x[0])
-	return x 
+	X=data[['user_item_lastday_count','item_to_cat_rate']].as_matrix()
+	
+	return X
 
 		
 def GetModel():
@@ -37,7 +36,7 @@ def GetModel():
 
 if __name__ == '__main__':
 	
-	X, Y = GetFeature()
+	X, Y = GetData()
 
 	parms = {
 	'C':np.logspace(-6,0,10),

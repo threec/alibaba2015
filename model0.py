@@ -7,18 +7,16 @@ from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
 
-def GetFeature(data, header_dict = ()):
+def GetFeature(data):
 	
-	x = [float(data[header_dict['user_item_lastday_count']][0])]
 	
-	X=np.log(0.3+np.array(x))
+	X=np.log(0.3+data[['user_item_lastday_count']].as_matrix())
 	
-	print X
 	return X 
 	
 def GetData():
 	data = pandas.read_csv('data.csv.subset.csv')
-	X=np.log(0.3+data[['user_item_lastday_count']].as_matrix())
+	X = GetFeature(data)
 	Y=data['buy'].as_matrix()
 	
 	return X,Y
