@@ -1,6 +1,6 @@
 # coding:utf-8
 
-import sklearn,pandas,pickle
+import sklearn,pandas, pickle
 import numpy as np
 
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
@@ -8,30 +8,37 @@ from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
 
 def GetData():
+	
 	data = pandas.read_csv('data.csv.subset.csv')
-	X=np.log(0.3+data[['user_item_count','user_item_lastday_count']].as_matrix())
+	
+	data['item_to_cat_rate'] = data['user_item_lastday_count'] / (1 + data['user_cat_lastday_count'])
+	data['user_item_lastday_count'] = np.log(0.3+data['user_item_lastday_count'])
+	
+	X=data[['user_item_lastday_count','item_to_cat_rate']].as_matrix()
+	
+	
 	Y=data['buy'].as_matrix()
+	
+	return X, Y
+	
+def GetFeature(data, header_dict):
+	x = [float(data[header_dict[i]][0]) for i in ['user_item_lastday_count','user_cat_lastday_count'] ]
+	
+	x[1] = x[0]/(1+x[1])
+	x[0] = np.log(0.3+x[0])
+	return x 
 
-	return X,Y 
-	
-def GetFeature(data, header_dict = ()):
-	
-	x = [float(data[header_dict[i]][0]) for i in ['user_item_count','user_item_lastday_count'] ]
-	# print x
-	X=np.log(0.3+np.array(x))
-
-	
-	return X
+		
 def GetModel():
-	f = open('model1.model','rb')
+	f = open('model3.model','rb')
 	clf = pickle.load(f)
 	f.close()
 	return clf
 
 if __name__ == '__main__':
 	
-	
-	X,Y = GetData()
+	X, Y = GetFeature()
+
 	parms = {
 	'C':np.logspace(-6,0,10),
 	'class_weight':[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
@@ -42,14 +49,16 @@ if __name__ == '__main__':
 	clf.fit(X,Y)
 	
 	import pickle
-	f = open('model1.model','wb')
+	f = open('model3.model','wb')
 	pickle.dump(clf, f)
 	f.close()
 	
-
 	print clf
 	print 'best score', clf.best_score_
 	print 'best parms', clf.best_params_
 	
-	pred = clf.predict(X_test)
-	print 'test f1 score', f1_score(Y_test, pred)
+	
+	
+	
+
+

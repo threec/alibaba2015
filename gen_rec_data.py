@@ -6,12 +6,17 @@ import numpy as np
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
 from sklearn.metrics import f1_score
 
-import pickle
+import pickle,sys
+
+if len(sys.argv)==2:
+	fout = sys.argv[1]
+else:
+	fout = 'submit.csv'
 
 # load model
-f = open('model2.model','rb')
-clf = pickle.load(f)
-f.close()
+import model2 as model
+
+clf = model.GetModel()
 
 # load need to be recommanded item
 items = pandas.read_csv('tianchi_mobile_recommend_train_item.csv')
@@ -21,17 +26,23 @@ f = open('feature_total.csv.subset.csv','rb')
 fr = csv.reader(f, delimiter=',')
 
 
-fo = open('submit.csv', 'wb')
+fo = open(fout, 'wb')
 fw = csv.writer(fo, delimiter=',')
 fw.writerow(['user_id','item_id'])
 
-fr.next()
+header = fr.next()
+header_dict = dict()
+for i in range(len(header)):
+	header_dict[header[i]] = i 
+
 i = 0
 for row in fr:
 	uid = int(row[0])
 	tid = int(row[1])
 	
-	if clf.predict(np.log(0.3+np.array([float(row[x]) for x in [3,2]])))==1 and tid in items:
+	X = model.GetFeature(row, header_dict = header_dict)
+	
+	if tid in items and clf.predict(X)==1:
 		print uid,tid
 		fw.writerow([uid, tid])
 	i = i + 1

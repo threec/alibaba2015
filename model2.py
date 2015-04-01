@@ -1,23 +1,41 @@
 # coding:utf-8
 
-import sklearn,pandas
+import sklearn,pandas, pickle
 import numpy as np
 
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
 
-
-if __name__ == '__main__':
-	data = pandas.read_csv('data.csv.subset.csv')
+def GetFeature(data, header_dict = ()):
 	
+	x = [float(data[header_dict[i]][0]) for i in ['user_item_lastday_count','user_cat_lastday_count'] ]
+	# print x
+	X=np.log(0.3+np.array(x))
+
+	print X
+	return X
+	
+def GetData():
+	data = pandas.read_csv('data.csv.subset.csv')
 	X=np.log(0.3+data[['user_item_lastday_count','user_cat_lastday_count']].as_matrix())
+
 	Y=data['buy'].as_matrix()
-
-	data_test = pandas.read_csv('data_test.csv')
-	X_test = np.log(0.3+data_test[['user_item_lastday_count','user_cat_lastday_count']])
-	Y_test = data_test['buy']
-
+		
+	return X, Y
+	
+	
+def GetModel():
+	f = open('model2.model','rb')
+	clf = pickle.load(f)
+	f.close()
+	return clf
+	
+if __name__ == '__main__':
+	
+	X, Y = GetData()
+	
+	
 	parms = {
 	'C':np.logspace(-6,0,10),
 	'class_weight':[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
