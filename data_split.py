@@ -11,7 +11,7 @@ def DataSplit(fin = 'data.csv', ftrain = 'data_train.csv', ftest='data_test.csv'
 	fo2 = open(ftest, 'wb')
 	fw2 = csv.writer(fo2, delimiter=',')
 
-	seed(1024)
+	seed(44)
 
 	header = fr.next()
 	fw1.writerow(header)
