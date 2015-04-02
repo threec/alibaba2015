@@ -14,7 +14,7 @@ def summary(Y, pred):
 	
 	print ''
 	print ' \tF\tT'
-	print 'N\t%d\t%d' % (np.sum((Y==0) & (pred==1)), np.sum((Y==0) & (pred==0)))
+	print 'N\t%d\t%d' % (np.sum((Y==0) & (pred==0)), np.sum((Y==0) & (pred==1)))
 	print 'P\t%d\t%d' % (np.sum((Y==1) & (pred==0)), np.sum((Y==1) & (pred==1)))
 	print '\n'
 	

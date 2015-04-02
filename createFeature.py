@@ -1,6 +1,7 @@
 # coding:utf-8
 
-import csv, time
+import csv, time,sys
+import numpy as np
 
 
 
@@ -29,6 +30,10 @@ def GetDict(d, key):
 	else:
 		return 0
 def DiffTime(t1, t2):
+	t1 = time.mktime(time.strptime(t1,'%Y-%m-%d %H'))
+	t2 = time.mktime(time.strptime(t2,'%Y-%m-%d %H'))
+	return t1 - t2
+	
 	
 def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday = '2014-12-18'):
 	user_action_count = dict()
@@ -48,7 +53,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	user_add_star = dict()
 	item_added_car = dict()
 	item_added_start = dict()
-	user_last_click_time = dict()
+	user_item_lasttime = dict()
 	
 	user_items = set()
 	item_cat = dict()
@@ -82,6 +87,23 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 				IncDict(user_buy_count, uid)
 				IncDict(item_buy_count, tid)
 				IncDict(cat_buy_count, cid)
+			if row[2] == '2': # star
+				IncDict(user_add_star, uid)
+				IncDict(item_added_start, tid)
+				
+			if row[2] == '3': # add to car
+				IncDict(user_add_car, uid)
+				IncDict(item_added_car, tid)
+			
+			key = '%s_%s' % (uid,tid)
+			if key in user_item_lasttime:
+				diff_time = DiffTime(user_item_lasttime[key], row[5])
+				if diff_time<0:
+					user_item_lasttime[key] = row[5]
+			else:
+				user_item_lasttime[key] = row[5]
+			
+				
 				
 			i = i + 1
 			if i%100000==0:
@@ -97,7 +119,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		"cat_buy_count", "user_cat_count", "user_cat_lastday_count", 
 		"user_item_count", "user_item_lastday_count",
 		"user_add_car", "user_add_star","item_added_car","item_added_start",
-		"user_last_click"
+		"user_item_lasttime"
 		])
 	for key in user_items:
 		uid, tid = key.split('_')
@@ -115,7 +137,13 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			GetDict(user_cat_count, '%s_%s' % (uid, cid)),
 			GetDict(user_cat_lastday_count, '%s_%s' % (uid, cid)),
 			GetDict(user_item_count, '%s_%s' % (uid, tid)),
-			GetDict(user_item_lastday_count, '%s_%s' % (uid, tid))]
+			GetDict(user_item_lastday_count, '%s_%s' % (uid, tid)),
+			GetDict(user_add_car, uid),
+			GetDict(user_add_star, uid),
+			GetDict(item_added_car, tid),
+			GetDict(item_added_start, tid),
+			time.mktime(time.strptime(GetDict(user_item_lasttime, '%s_%s' % (uid, tid)),'%Y-%m-%d %H'))
+			]
 		
 		fw.writerow(data)
 		
@@ -123,4 +151,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 
 
 if __name__ == '__main__':
-	GenFeature(lastday='2014-12-17')
+	if sys.argv[1]=='train':
+		GenFeature('user_action_train.csv', 'feature.csv', lastday='2014-12-17')
+	if sys.argv[1]=='submit':
+		GenFeature('tianchi_mobile_recommend_train_user.csv', 'feature_total.csv', lastday='2014-12-18')

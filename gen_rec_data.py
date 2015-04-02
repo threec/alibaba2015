@@ -14,7 +14,7 @@ else:
 	fout = 'submit.csv'
 
 # load model
-import model4 as model
+import model7 as model
 
 clf = model.GetModel()
 
@@ -24,7 +24,7 @@ items = set(items['item_id'])
 
 
 block_size = 100000
-fr = pandas.read_csv('feature_total.csv.subset.csv', iterator=True, chunksize=block_size)
+fr = pandas.read_csv('feature_total.csv', iterator=True, chunksize=block_size)
 
 
 fo = open(fout, 'wb')

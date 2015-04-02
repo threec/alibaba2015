@@ -11,7 +11,7 @@ from sklearn.grid_search import GridSearchCV
 
 def GetData():
 	
-	data = pandas.read_csv('data.csv.subset.csv')
+	data = pandas.read_csv('data.train.csv')
 	
 	
 	X=GetFeature(data)
@@ -53,9 +53,9 @@ if __name__ == '__main__':
 	parms = {
 	'C':np.logspace(-6,0,10),
 	#'class_weight':[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
-	'class_weight':[{0:1,1:200}] #[{0:1,1:r} for r in np.logspace(2,4,10)]
+	#'class_weight':[{0:1,1:200}] #[{0:1,1:r} for r in np.logspace(2,4,10)]
 	}
-	lr = LogisticRegression(penalty='l2')
+	lr = LogisticRegression(penalty='l1')
 	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
 
 	clf.fit(X,Y)
