@@ -1,8 +1,8 @@
 # coding:utf-8
 '''
-利用特征 最后一天对物品点击数，最后一天对品牌点击数， 用户转化率
+利用特征 最后一天对物品点击数，最后一天对品牌点击数， 用户转化率，商品最后一天热门程度
 '''
-import sklearn,pandas, pickle
+import sklearn,pandas, pickle, os
 import numpy as np
 
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
@@ -32,15 +32,16 @@ def GetFeature(data):
 	data['user_cat_lastday_count'] = np.log(0.3+data['user_cat_lastday_count'])
 	data['user_item_lastday_count'] = np.log(0.3+data['user_item_lastday_count'])
 	data['user_convert_rate'] = data['user_buy_count'] / (1+data['user_action_count'])
-	data['user_action_count'] = np.log(0.3 + data['user_action_count'])
+	data['item_convert_rate'] = data['item_buy_count'] / (1+data['item_click_count'])
 	
-	X=data[['user_item_lastday_count','user_cat_lastday_count','user_convert_rate', 'user_action_count']].as_matrix()
+	X=data[['user_item_lastday_count','user_cat_lastday_count','user_convert_rate', 
+		'item_convert_rate']].as_matrix()
 	
 	return X
 
 		
 def GetModel():
-	f = open('model5.model','rb')
+	f = open(os.path.basename(__file__).replace('.py','.model'),'rb')
 	clf = pickle.load(f)
 	f.close()
 	return clf
@@ -60,7 +61,7 @@ if __name__ == '__main__':
 	clf.fit(X,Y)
 	
 	import pickle
-	f = open('model5.model','wb')
+	f = open(os.path.basename(__file__).replace('.py','.model'),'wb')
 	pickle.dump(clf, f)
 	f.close()
 	
