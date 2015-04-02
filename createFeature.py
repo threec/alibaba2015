@@ -1,6 +1,6 @@
 # coding:utf-8
 
-import csv
+import csv, time
 
 
 
@@ -28,7 +28,8 @@ def GetDict(d, key):
 		return d[key]
 	else:
 		return 0
-
+def DiffTime(t1, t2):
+	
 def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday = '2014-12-18'):
 	user_action_count = dict()
 	user_lastday_count = dict()
@@ -43,6 +44,12 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	user_item_count = dict()
 	user_item_lastday_count = dict()
 
+	user_add_car = dict()
+	user_add_star = dict()
+	item_added_car = dict()
+	item_added_start = dict()
+	user_last_click_time = dict()
+	
 	user_items = set()
 	item_cat = dict()
 
@@ -88,7 +95,10 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		"user_lastday_count", "user_buy_count", "item_click_count",
 		"item_lastday_count", "item_buy_count", "cat_click_count", 
 		"cat_buy_count", "user_cat_count", "user_cat_lastday_count", 
-		"user_item_count", "user_item_lastday_count"])
+		"user_item_count", "user_item_lastday_count",
+		"user_add_car", "user_add_star","item_added_car","item_added_start",
+		"user_last_click"
+		])
 	for key in user_items:
 		uid, tid = key.split('_')
 		cid = item_cat[tid]
