@@ -1,0 +1,14 @@
+user_cat_lastweek_click = dict()
+	user_cat_lastweek_star = dict()
+	user_cat_lastweek_add_car = dict()
+	user_cat_lastweek_buy = dict()
+	
+	user_cat_halfmonth_click = dict()
+	user_cat_halfmonth_star = dict()
+	user_cat_halfmonth_add_car = dict()
+	user_cat_halfmonth_buy = dict()
+	
+	user_cat_before_halfmonth_click = dict()
+	user_cat_before_halfmonth_star = dict()
+	user_cat_before_halfmonth_add_car = dict()
+	user_cat_before_halfmonth_buy = dict()

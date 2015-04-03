@@ -1,16 +1,36 @@
 # coding:utf-8
 # merge.py
 # usage  python merge.py file1 file2
-import csv, sys
+import csv, sys, pandas
+import numpy as np
 
-if sys.argc!=4:
+if len(sys.argv)!=4:
 	print 'usage  python merge.py file1 file2 file3'
 	
-f1 = open(sys.argv[1], 'rb')
-f2 = open(sys.argv[2], 'rb')
-fr1 = csv.reader(f1, delimiter=',')
-fr2 = csv.reader(f2, delimiter=',')
+block_size = 100000
+r1 = pandas.read_csv(sys.argv[1], iterator=True, chunksize=block_size)
+r2 = pandas.read_csv(sys.argv[2], iterator=True, chunksize=block_size)
 
-f = open(sys.argv[3], 'wb')
-fw = csv.writer(f, delimiter=',')
+mod = 'w'
+header = True
+
+nrows = 0
+for df1 in r1:
+	df2 = r2.get_chunk()
+	if len(df1)!= len(df2):
+		print 'data error'
+		sys.exit()
+	if np.sum(np.sum(df1[['user_id', 'item_id']] == df2[['user_id', 'item_id']]))!=2*len(df1):
+		print 'key error'
+		sys.exit()
+	df = pandas.concat([df1, df2], axis=1)
+	df.to_csv(sys.argv[3], mode=mod, header = header,index = False)
+	header = False
+	mod = 'a'
+
+	nrows = nrows + block_size
+	print 'processed %d rows!' % nrows
+
+
+
 

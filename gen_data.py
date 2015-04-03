@@ -40,4 +40,4 @@ def CombineFeatureLabel(f_feature='feature.csv', f_label='label.csv', f_out='dat
 	f3.close()
 	
 if __name__ == '__main__':
-	CombineFeatureLabel()
+	CombineFeatureLabel('feature.merge.csv')

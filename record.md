@@ -268,3 +268,43 @@
 
 	F1      P       R
 	2.35    1.37    8.28
+
+## model9
+在模型8上又增加了一些特征
+	0 user_id
+	1 item_id
+	2 user_action_count
+	3 user_lastday_count
+	4 user_buy_count
+	5 item_click_count
+	6 item_lastday_count
+	7 item_buy_count
+	8 cat_click_count
+	9 cat_buy_count
+	10 user_cat_count
+	11 user_cat_lastday_count
+	12 user_item_count
+	13 user_item_lastday_count
+	14 user_add_car
+	15 user_add_star
+	16 item_added_car
+	17 item_added_start
+	18 user_item_lasttime
+	19 cat_add_car
+	20 cat_add_star
+	21 user_id
+	22 item_id
+	23 user_item_buy
+	24 user_item_lastweek_click
+	25 user_item_lastweek_star
+	26 user_item_lastweek_add_car
+	27 user_item_lastweek_buy
+	28 user_item_halfmonth_click
+	29 user_item_halfmonth_star
+	30 user_item_halfmonth_add_car
+	31 user_item_halfmonth_buy
+	32 user_item_before_halfmonth_click
+	33 user_item_before_halfmonth_star
+	34 user_item_before_halfmonth_add_car
+	35 user_item_before_halfmonth_buy
+	36 buy
