@@ -15,7 +15,7 @@ def GetFeature(data):
 	return X
 	
 def GetData():
-	data = pandas.read_csv('data.csv.subset.csv')
+	data = pandas.read_csv('data.train.csv')
 	
 	X = GetFeature(data)
 	Y=data['buy'].as_matrix()
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 	
 	parms = {
 	'C':np.logspace(-6,0,10),
-	'class_weight':[{0:1,1:200}] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
+	#'class_weight':[{0:1,1:200}] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression()
 	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
@@ -50,9 +50,10 @@ if __name__ == '__main__':
 	
 	pred = clf.predict(X)
 	
-	from summary import summary,clf_summary
+	from summary import summary,clf_summary,TestMode
 	clf_summary(clf)
 	summary(Y, pred)
+	TestMode('model2')
 	
 	
 

@@ -24,10 +24,10 @@ trows = 0
 rows = 0
 for data in reader:
 	if mode=='train':
-		idx = (data['buy']==1) | (np.random.rand(len(data))<.02) # 0.02
+		idx = (data['buy']==1) | (np.random.rand(len(data))<.05) # 0.02
 		fname = 'data.train.csv'
 	else:
-		idx = (np.random.rand(len(data))<0.02) 
+		idx = (np.random.rand(len(data))<0.2) 
 		fname = 'data.test.csv'
 	
 	data[idx].to_csv(fname, mode=mod, header = header,index = False)

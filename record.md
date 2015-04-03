@@ -26,6 +26,28 @@
 	N   4576851     2171
 	P       282     20
 	
+	
+	根正数据后
+	
+	best score 0.174855371546
+	best parms {'C': 0.0001}
+	clf parms: -1.90064635925 1.21963529167
+
+	F1      P       R
+	18.96   17.81   20.28
+
+			F       T
+	N       456566  1020
+	P       869     221
+
+
+	===== for test =====
+			F       T
+	N       4567997 10237
+	P       869     221
+
+	F1      P       R
+	3.83    2.11    20.28
 ## model1
 	常数项，	用户对该物品总行为量，用户最后一天对该物品行为量  logistic回归 
 	[-4.57766365] [[ 0.65020026  1.34236491]]
@@ -436,3 +458,75 @@
 
 	F1      P       R
 	5.51    3.18    20.53
+	
+	======上面的结果有问题=======
+	
+	固定参数C=1，采样参数为0.05
+	
+	best score 0.24460316054
+	best parms {'C': 1}
+	clf parms:
+	intercept       0.000000
+	user_action_count       -0.412294
+	user_lastday_count      -0.004247
+	user_buy_count  0.365871
+	item_click_count        -0.234662
+	item_lastday_count      0.128407
+	item_buy_count  0.119019
+	cat_click_count -0.597157
+	cat_buy_count   0.612829
+	user_cat_count  -0.215714
+	user_cat_lastday_count  0.131090
+	user_item_count 1.159468
+	user_item_lastday_count 0.583099
+	user_add_car    -0.122665
+	user_add_star   0.054486
+	item_added_car  0.306778
+	item_added_start        -0.048224
+	user_item_lasttime      0.172546
+	cat_add_car     -0.044878
+	cat_add_star    0.016947
+	user_item_buy   -1.930079
+	user_item_lastweek_click        0.383829
+	user_item_lastweek_star 0.382999
+	user_item_lastweek_add_car      0.931057
+	user_item_lastweek_buy  0.896675
+	user_item_halfmonth_click       0.028987
+	user_item_halfmonth_star        -0.239761
+	user_item_halfmonth_add_car     -0.063565
+	user_item_halfmonth_buy 1.454027
+	user_item_before_halfmonth_click        -0.215901
+	user_item_before_halfmonth_star 0.150459
+	user_item_before_halfmonth_add_car      0.160473
+	user_item_before_halfmonth_buy  1.563669
+	user_cat_lastweek_click 0.096115
+	user_cat_lastweek_star  -0.055002
+	user_cat_lastweek_add_car       0.146717
+	user_cat_lastweek_buy   -0.793438
+	user_cat_halfmonth_click        0.014127
+	user_cat_halfmonth_star 0.065617
+	user_cat_halfmonth_add_car      -0.036352
+	user_cat_halfmonth_buy  0.034719
+	user_cat_before_halfmonth_click -0.049762
+	user_cat_before_halfmonth_star  0.000000
+	user_cat_before_halfmonth_add_car       -0.084724
+	user_cat_before_halfmonth_buy   0.450901
+	item_convert_rate       2.620281
+	user_convert_rate       0.000000
+
+
+	F1      P       R
+	25.51   60.69   16.15
+
+			F       T
+	N       228466  114
+	P       914     176
+
+
+	===== for test =====
+			F       T
+	N       4575544 2690
+	P       914     176
+
+	F1      P       R
+	8.90    6.14    16.15

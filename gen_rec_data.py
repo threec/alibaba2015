@@ -39,6 +39,7 @@ fw = csv.writer(fo, delimiter=',')
 fw.writerow(['user_id','item_id'])
 
 i = 0
+nrows = 0
 for data in fr:
 	
 	
@@ -50,6 +51,7 @@ for data in fr:
 		tid = data['item_id'][idx]
 		if tid in items and Y[idx]==1:
 			print uid,tid
+			nrows = nrows + 1
 			fw.writerow([uid, tid])
 	i = i + block_size
 	
@@ -57,4 +59,5 @@ for data in fr:
 	
 fo.close()
 
-util.notify_me('recommand data are done!')
+print 'recommand %d record.' % nrows
+util.notify_me('recommand data are done! %d record.' % nrows)
