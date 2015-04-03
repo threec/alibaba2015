@@ -222,3 +222,49 @@
 	P       279     23
 	F1      P       R
 	2.29    1.35    7.62
+
+## model8 
+在7的基础上增加了转化率
+
+	best score 0.135714752904
+	best parms {'C': 233.57214690901213}
+	clf parms:
+	intercept       0.402688
+	user_action_count       -0.135196
+	user_lastday_count      -0.067643
+	user_buy_count  0.121783
+	item_click_count        -0.557212
+	item_lastday_count      -0.047574
+	item_buy_count  -0.289825
+	cat_click_count -0.823642
+	cat_buy_count   0.888391
+	user_cat_count  -0.275224
+	user_cat_lastday_count  0.207819
+	user_item_count 1.351654
+	user_item_lastday_count 1.120657
+	user_add_car    0.033034
+	user_add_star   0.113090
+	item_added_car  1.088700
+	item_added_start        0.042085
+	user_item_lasttime      -0.041916
+	item_convert_rate       -5.019174
+	user_convert_rate       20.144411
+
+
+
+
+	F1      P       R
+	14.25   51.02   8.28
+
+			F       T
+	N       91408   24
+	P       277     25
+
+
+	===== for test =====
+			F       T
+	N       4577224 1798
+	P       277     25
+
+	F1      P       R
+	2.35    1.37    8.28

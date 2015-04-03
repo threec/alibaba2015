@@ -55,7 +55,17 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	item_added_start = dict()
 	user_item_lasttime = dict()
 	
-	user_items = set()
+	cat_add_car = dict()
+	cat_add_star = dict()
+	user_item_buy = dict()
+	
+	# 细化行为特征
+	user_item_lastweek_click = dict()
+	user_item_lastweek_star = dict()
+	user_item_lastweek_add_car = dict()
+	user_item_lastweek_buy = dict()
+	
+	user_items = set()  # 其实是用户物品对
 	item_cat = dict()
 
 	with open(finput, 'rb') as f:
@@ -69,8 +79,13 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			tid = row[1]
 			cid = row[4]
 			
+			utid = '%s_%s' % (uid, tid)
+			ucid = '%s_%s' % (uid, cid)
+			
 			user_items.add('%s_%s' % (uid,tid))
 			item_cat[tid] = cid
+			
+			diff_time = DiffTime('%s 00' % lastday, row[5])
 			
 			IncDict(user_action_count, uid)
 			IncDict(item_click_count, tid)
@@ -83,17 +98,39 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 				IncDict(item_lastday_count, tid)
 				IncDict(user_cat_lastday_count, '%s_%s' % (uid,cid))
 				IncDict(user_item_lastday_count, '%s_%s' % (uid,tid))
-			if row[2] == '4':  # buy
-				IncDict(user_buy_count, uid)
-				IncDict(item_buy_count, tid)
-				IncDict(cat_buy_count, cid)
+			
+			
+			if row[2] == '1': # click
+				if diff_time < 6*24*3600: # lastweek
+					IncDict(user_item_lastweek_click, utid)
+					
 			if row[2] == '2': # star
 				IncDict(user_add_star, uid)
 				IncDict(item_added_start, tid)
 				
+				IncDict(cat_add_star, cid)
+	
+				if diff_time < 6*24*3600: # lastweek
+					IncDict(user_item_lastweek_star, utid)
+				
 			if row[2] == '3': # add to car
 				IncDict(user_add_car, uid)
 				IncDict(item_added_car, tid)
+				
+				IncDict(cat_add_car, cid)
+				
+				if diff_time < 6*24*3600: # lastweek
+					IncDict(user_item_lastweek_add_car, utid)
+	
+			if row[2] == '4':  # buy
+				IncDict(user_buy_count, uid)
+				IncDict(item_buy_count, tid)
+				IncDict(cat_buy_count, cid)
+				
+				IncDict(user_item_buy, utid)
+				
+				if diff_time < 6*24*3600: # lastweek
+					IncDict(user_item_lastweek_buy, utid)
 			
 			key = '%s_%s' % (uid,tid)
 			if key in user_item_lasttime:
@@ -119,7 +156,9 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		"cat_buy_count", "user_cat_count", "user_cat_lastday_count", 
 		"user_item_count", "user_item_lastday_count",
 		"user_add_car", "user_add_star","item_added_car","item_added_start",
-		"user_item_lasttime"
+		"user_item_lasttime",
+		"cat_add_car", "cat_add_star", "user_item_buy",
+		"user_item_lastweek_click", "user_item_lastweek_star", "user_item_lastweek_add_car", "user_item_lastweek_buy"
 		])
 	for key in user_items:
 		uid, tid = key.split('_')
@@ -142,7 +181,16 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			GetDict(user_add_star, uid),
 			GetDict(item_added_car, tid),
 			GetDict(item_added_start, tid),
-			time.mktime(time.strptime(GetDict(user_item_lasttime, '%s_%s' % (uid, tid)),'%Y-%m-%d %H'))
+			time.mktime(time.strptime(GetDict(user_item_lasttime, '%s_%s' % (uid, tid)),'%Y-%m-%d %H')),
+			
+			GetDict(cat_add_car, cid),
+			GetDict(cat_add_star, cid),
+			GetDict(user_item_buy, utid),
+			
+			GetDict(user_item_lastweek_click, utid),
+			GetDict(user_item_lastweek_star, utid),
+			GetDict(user_item_lastweek_add_car, utid),
+			GetDict(user_item_lastweek_buy, utid)
 			]
 		
 		fw.writerow(data)
