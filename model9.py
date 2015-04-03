@@ -88,6 +88,6 @@ if __name__ == '__main__':
 	
 	TestModel()
 	
-	util.notify_me(' is finished' % __fname__)
+	util.notify_me('%s is finished' % __fname__)
 
 

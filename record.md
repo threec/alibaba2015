@@ -366,3 +366,73 @@
 	F1      P       R
 	4.47    2.55    18.21
 	
+
+### 增加用户和类别的特征
+
+	best score 0.305488138809
+	best parms {'C': 0.33598182862837811}
+	clf parms:
+	intercept       0.000000
+	user_action_count       -0.303206
+	user_lastday_count      -0.031510
+	user_buy_count  0.350275
+	item_click_count        -0.157870
+	item_lastday_count      -0.011975
+	item_buy_count  0.188058
+	cat_click_count -0.923669
+	cat_buy_count   0.596875
+	user_cat_count  -0.375394
+	user_cat_lastday_count  0.031611
+	user_item_count 0.468305
+	user_item_lastday_count 0.873731
+	user_add_car    -0.141360
+	user_add_star   0.070143
+	item_added_car  0.058130
+	item_added_start        0.091674
+	user_item_lasttime      0.096233
+	cat_add_car     0.386160
+	cat_add_star    0.000000
+	user_item_buy   0.000000
+	user_item_lastweek_click        0.626814
+	user_item_lastweek_star 0.309774
+	user_item_lastweek_add_car      1.248091
+	user_item_lastweek_buy  -0.457664
+	user_item_halfmonth_click       0.120086
+	user_item_halfmonth_star        0.000000
+	user_item_halfmonth_add_car     0.000000
+	user_item_halfmonth_buy 0.000000
+	user_item_before_halfmonth_click        0.039437
+	user_item_before_halfmonth_star 0.000000
+	user_item_before_halfmonth_add_car      0.000105
+	user_item_before_halfmonth_buy  0.000000
+	user_cat_lastweek_click 0.055041
+	user_cat_lastweek_star  0.000000
+	user_cat_lastweek_add_car       0.375398
+	user_cat_lastweek_buy   -1.194903
+	user_cat_halfmonth_click        0.045370
+	user_cat_halfmonth_star 0.000000
+	user_cat_halfmonth_add_car      0.039035
+	user_cat_halfmonth_buy  0.180086
+	user_cat_before_halfmonth_click -0.083721
+	user_cat_before_halfmonth_star  0.000000
+	user_cat_before_halfmonth_add_car       -0.231196
+	user_cat_before_halfmonth_buy   0.666587
+	item_convert_rate       0.000000
+	user_convert_rate       0.000000
+
+
+	F1      P       R
+	31.79   70.45   20.53
+
+			F       T
+	N       91406   26
+	P       240     62
+
+
+	===== for test =====
+			F       T
+	N       4577134 1888
+	P       240     62
+
+	F1      P       R
+	5.51    3.18    20.53
