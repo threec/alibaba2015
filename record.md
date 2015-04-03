@@ -292,19 +292,76 @@
 	18 user_item_lasttime
 	19 cat_add_car
 	20 cat_add_star
-	21 user_id
-	22 item_id
-	23 user_item_buy
-	24 user_item_lastweek_click
-	25 user_item_lastweek_star
-	26 user_item_lastweek_add_car
-	27 user_item_lastweek_buy
-	28 user_item_halfmonth_click
-	29 user_item_halfmonth_star
-	30 user_item_halfmonth_add_car
-	31 user_item_halfmonth_buy
-	32 user_item_before_halfmonth_click
-	33 user_item_before_halfmonth_star
-	34 user_item_before_halfmonth_add_car
-	35 user_item_before_halfmonth_buy
-	36 buy
+	21 user_item_buy
+	22 user_item_lastweek_click
+	23 user_item_lastweek_star
+	24 user_item_lastweek_add_car
+	25 user_item_lastweek_buy
+	26 user_item_halfmonth_click
+	27 user_item_halfmonth_star
+	28 user_item_halfmonth_add_car
+	29 user_item_halfmonth_buy
+	30 user_item_before_halfmonth_click
+	31 user_item_before_halfmonth_star
+	32 user_item_before_halfmonth_add_car
+	33 user_item_before_halfmonth_buy
+	34 buy
+	
+	训练结果是
+	
+	best score 0.284183097713
+	best parms {'C': 26.366508987303554}
+	clf parms:
+	intercept       3.104222
+	user_action_count       -0.207504
+	user_lastday_count      -0.076293
+	user_buy_count  0.242781
+	item_click_count        -0.212786
+	item_lastday_count      -0.097783
+	item_buy_count  0.344305
+	cat_click_count -1.224114
+	cat_buy_count   0.609725
+	user_cat_count  -0.258504
+	user_cat_lastday_count  0.077649
+	user_item_count 0.332926
+	user_item_lastday_count 0.971126
+	user_add_car    -0.113400
+	user_add_star   0.097122
+	item_added_car  0.045578
+	item_added_start        0.116045
+	user_item_lasttime      0.166021
+	cat_add_car     0.563352
+	cat_add_star    0.116039
+	user_item_buy   -2.159341
+	user_item_lastweek_click        0.686702
+	user_item_lastweek_star 0.277676
+	user_item_lastweek_add_car      1.697815
+	user_item_lastweek_buy  0.094305
+	user_item_halfmonth_click       0.250627
+	user_item_halfmonth_star        -0.413401
+	user_item_halfmonth_add_car     0.000000
+	user_item_halfmonth_buy 2.074181
+	user_item_before_halfmonth_click        -0.002502
+	user_item_before_halfmonth_star -0.073459
+	user_item_before_halfmonth_add_car      0.007877
+	user_item_before_halfmonth_buy  2.615367
+	item_convert_rate       -0.535343
+	user_convert_rate       14.319559
+
+
+	F1      P       R
+	28.35   63.95   18.21
+
+			F       T
+	N       91401   31
+	P       247     55
+
+
+	===== for test =====
+			F       T
+	N       4576916 2106
+	P       247     55
+
+	F1      P       R
+	4.47    2.55    18.21
+	

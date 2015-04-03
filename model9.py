@@ -2,7 +2,7 @@
 '''
 利用特征 最后一天对物品点击数，最后一天对品牌点击数， 用户转化率，商品最后一天热门程度
 '''
-import sklearn,pandas, pickle, os, summary
+import sklearn,pandas, pickle, os, summary, util
 import numpy as np
 
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
@@ -87,5 +87,7 @@ if __name__ == '__main__':
 	
 	
 	TestModel()
+	
+	util.notify_me(' is finished' % __fname__)
 
 

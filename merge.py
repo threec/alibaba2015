@@ -23,7 +23,7 @@ for df1 in r1:
 	if np.sum(np.sum(df1[['user_id', 'item_id']] == df2[['user_id', 'item_id']]))!=2*len(df1):
 		print 'key error'
 		sys.exit()
-	df = pandas.concat([df1, df2], axis=1)
+	df = pandas.concat([df1, df2[[field for field in df2.keys() if field not in ['user_id', 'item_id']]]], axis=1)
 	df.to_csv(sys.argv[3], mode=mod, header = header,index = False)
 	header = False
 	mod = 'a'

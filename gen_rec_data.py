@@ -1,20 +1,27 @@
 # coding:utf-8
 # rec for user item
-import sklearn,pandas,csv
+'''
+usage gen_rec_data.py modelname
+for example
+python gen_rec_data.py model0
+
+'''
+import sklearn,pandas,csv,sys
 import numpy as np
 
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
 from sklearn.metrics import f1_score
 
-import pickle,sys
+import pickle,sys, util
 
-if len(sys.argv)==2:
-	fout = sys.argv[1]
-else:
-	fout = 'submit.csv'
+if len(sys.argv)!=2:
+	print __doc__
+	sys.exit()
+
+fout = 'submit.%s.csv' % sys.argv[1]
 
 # load model
-import model7 as model
+model = util.load_model_from_name(sys.argv[1])
 
 clf = model.GetModel()
 
@@ -24,7 +31,7 @@ items = set(items['item_id'])
 
 
 block_size = 100000
-fr = pandas.read_csv('feature_total.csv', iterator=True, chunksize=block_size)
+fr = pandas.read_csv('feature_total.merge.csv', iterator=True, chunksize=block_size)
 
 
 fo = open(fout, 'wb')
@@ -50,4 +57,4 @@ for data in fr:
 	
 fo.close()
 
-	
+util.notify_me('recommand data are done!')
