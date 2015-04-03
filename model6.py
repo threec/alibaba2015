@@ -41,7 +41,9 @@ def GetFeature(data):
 
 		
 def GetModel():
-	f = open(os.path.basename(__file__).replace('.py','.model'),'rb')
+	name = os.path.basename(__file__)
+	name = name[:name.index('.')]
+	f = open('%s.model' % name,'rb')
 	clf = pickle.load(f)
 	f.close()
 	return clf

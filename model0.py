@@ -1,6 +1,6 @@
 # coding:utf-8
 
-import sklearn,pandas,pickle
+import sklearn,pandas,pickle,os
 import numpy as np
 
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
@@ -22,7 +22,9 @@ def GetData():
 	return X,Y
 
 def GetModel():
-	f = open('model0.model','rb')
+	name = os.path.basename(__file__)
+	name = name[:name.index('.')]
+	f = open('%s.model' % name,'rb')
 	clf = pickle.load(f)
 	f.close()
 	return clf	

@@ -35,11 +35,16 @@ def GetData():
 	
 def GetFeature(data):
 
+	
 	feature_names = [i for i in data.columns if i not in ['user_id','item_id','buy']]
 	
-	X = np.log(0.3+data[feature_names])
+	X1 = np.log(0.3+data[feature_names])
+	X2 = dict()
+	X2['user_convert_rate'] = data['user_buy_count'] / (1+data['user_action_count'])
+	X2['item_convert_rate'] = data['item_buy_count'] / (1+data['item_click_count'])
+	X2 = pandas.DataFrame(X2)
 	
-	
+	X = pandas.concat([X1, X2], axis=1)
 	
 	return X
 
@@ -76,6 +81,7 @@ if __name__ == '__main__':
 	
 	
 	pred = clf.predict(X)
+	
 	summary.clf_summary(clf, feature_names)
 	summary.summary(Y, pred)
 	

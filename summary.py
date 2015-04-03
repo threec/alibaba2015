@@ -4,9 +4,10 @@ usage summary.py modelname
 '''
 	
 	
-import sklearn
+import sklearn,pandas
 from sklearn.metrics import f1_score,precision_score,recall_score,confusion_matrix
 import numpy as np 
+import util, sys 
 
 def summary(Y, pred):
 	print 'F1\tP\tR'
@@ -18,20 +19,64 @@ def summary(Y, pred):
 	print 'P\t%d\t%d' % (np.sum((Y==1) & (pred==0)), np.sum((Y==1) & (pred==1)))
 	print '\n'
 	
-def clf_summary(clf):
+	
+def clf_summary(clf, feature_names=None):
 	# print clf
 	print 'best score', clf.best_score_
 	print 'best parms', clf.best_params_
 	
-	print 'clf parms:',
-	print clf.best_estimator_.intercept_[0],
-	for c in clf.best_estimator_.coef_[0]:
-		print c,
-	print '\n'
+	if feature_names is None:
+		print 'clf parms:',
+		print clf.best_estimator_.intercept_[0],
+		for c in clf.best_estimator_.coef_[0]:
+			print c,
+		print '\n'
+	else:
+		print 'clf parms:'
+		print 'intercept\t%.6f' % clf.best_estimator_.intercept_[0]
+		for i in range(len(clf.best_estimator_.coef_[0])):
+			print '%s\t%.6f' % (feature_names[i],clf.best_estimator_.coef_[0][i])
+		print '\n'
+
+def TestModel(modelname):
+	model = util.load_model_from_name(modelname)
+	clf = model.GetModel()
+	
+	print '===== for test ====='
+	
+	block_size = 100000
+	reader = pandas.read_csv('data.csv', iterator=True, chunksize=block_size)
+	TP = 0.
+	TN = 0.
+	FP = 0.
+	FN = 0.
+	for data in reader:
+		X_test = model.GetFeature(data).as_matrix()
+		Y_test = data['buy'].as_matrix()
+		pred = clf.predict(X_test)
+		
+		TP = TP + np.sum(Y_test * pred)
+		TN = TN + np.sum((1-Y_test) * pred)
+		FP = FP + np.sum(Y_test * (1 - pred))
+		FN = FN + np.sum((1-Y_test) * (1 - pred))
+	
+	print ' \tF\tT'
+	print 'N\t%d\t%d' % (FN, TN)
+	print 'P\t%d\t%d' % (FP, TP)
+	print ''
+	
+	P = TP/(TP + TN)
+	R = TP/(TP + FP)
+	
+	F1 = 2*P*R/(P+R)
+	print 'F1\tP\tR'
+	print '%.2f\t%.2f\t%.2f' % (F1*100, P*100, R*100)
+	# print clf.grid_scores_
+	# return TP,TN,FP,FN
 		
 if __name__ == '__main__':
 	
-	import util, sys 
+	
 	
 	if len(sys.argv)!=2:
 		print __doc__
@@ -41,6 +86,10 @@ if __name__ == '__main__':
 	X,Y = model.GetData()
 	pred = clf.predict(X)
 	
-	clf_summary(clf)
+	feature_names = X.columns
+	
+	clf_summary(clf, feature_names)
 	print '\n'
 	summary(Y,pred)
+	
+	TestModel( sys.argv[1])

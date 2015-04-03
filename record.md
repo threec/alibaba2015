@@ -150,24 +150,24 @@
 	P       279     23
 	
 ## mode7
-特征
-2 user_action_count
-3 user_lastday_count
-4 user_buy_count
-5 item_click_count
-6 item_lastday_count
-7 item_buy_count
-8 cat_click_count
-9 cat_buy_count
-10 user_cat_count
-11 user_cat_lastday_count
-12 user_item_count
-13 user_item_lastday_count
-14 user_add_car
-15 user_add_star
-16 item_added_car
-17 item_added_start
-18 user_item_lasttime
+	特征
+	2 user_action_count
+	3 user_lastday_count
+	4 user_buy_count
+	5 item_click_count
+	6 item_lastday_count
+	7 item_buy_count
+	8 cat_click_count
+	9 cat_buy_count
+	10 user_cat_count
+	11 user_cat_lastday_count
+	12 user_item_count
+	13 user_item_lastday_count
+	14 user_add_car
+	15 user_add_star
+	16 item_added_car
+	17 item_added_start
+	18 user_item_lasttime
 
 
 	best score 0.598093712254
@@ -184,14 +184,29 @@
 	N       47      4557
 	P       151     151
 	
-	采样参数控制在0.03左右
+	采样参数控制在0.02左右
 	
 	best score 0.130854419874
-	best parms {'C': 0.48329302385717521}
-	clf parms: 0.0 -0.359944815233 -0.0664485429783 0.327106133721 -0.492135239468
-	.0 -0.448794743882 -0.793802691472 0.847289942685 -0.257805500994 0.20617339132
-	 1.28533705921 1.06165901964 0.0295274396019 0.108182725048 1.0754078822 0.0248
-	90450083 0.0253058582111
+	best parms {'C': 0.69519279617756058}
+	clf parms:
+	intercept	0.000000
+	user_action_count	-0.371763
+	user_lastday_count	-0.066816
+	user_buy_count	0.331509
+	item_click_count	-0.502071
+	item_lastday_count	-0.002984
+	item_buy_count	-0.457847
+	cat_click_count	-0.802509
+	cat_buy_count	0.858689
+	user_cat_count	-0.260454
+	user_cat_lastday_count	0.208004
+	user_item_count	1.295417
+	user_item_lastday_count	1.064782
+	user_add_car	0.031094
+	user_add_star	0.109781
+	item_added_car	1.082721
+	item_added_start	0.036579
+	user_item_lasttime	0.030474
 
 	F1      P       R
 	13.07   46.00   7.62
