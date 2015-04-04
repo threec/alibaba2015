@@ -92,7 +92,7 @@ def GetFeature(data):
 		"user_item_cart_nobuy",
 		"user_item_buy_again"
 	]
-	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features and not in nolog2]
+	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features and i not in nolog2]
 	
 	X1 = np.log(0.3+data[feature_names])
 	X2 = dict()

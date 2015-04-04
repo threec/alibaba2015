@@ -84,14 +84,14 @@ _feature_names = [
 	]
 def GetFeature(data):
 
-	nolog = ['user_id','item_id', 'buy']
+	nolog = ['user_id','item_id', 'buy', 'user_convert_rate', 'item_convert_rate']
 	factor_features = [
 		"user_item_click_nobuy",
 		"user_item_star_nobuy",
 		"user_item_cart_nobuy",
 		"user_item_buy_again"
 	]
-	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features]
+	feature_names = [i for i in _feature_names if i not in nolog and i not in factor_features]
 	
 	X1 = np.log(0.3+data[feature_names])
 	X2 = dict()
@@ -105,7 +105,7 @@ def GetFeature(data):
 	
 	
 	
-	return X #[_feature_names]
+	return X[_feature_names]
 
 		
 def GetModel():
@@ -125,10 +125,10 @@ if __name__ == '__main__':
 	feature_names = X.columns
 	parms = {
 	'C': np.logspace(-2,3,10),  # 0.5是最好的
-	'class_weight':[{0:1,1:r} for r in np.linspace(1,10,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
+	# 'class_weight':[{0:1,1:r} for r in np.linspace(1,10,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression(penalty='l1')
-	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=20)
+	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
 
 	clf.fit(X,Y)
 	
