@@ -85,13 +85,14 @@ _feature_names = [
 def GetFeature(data):
 
 	nolog = ['user_id','item_id', 'buy']
+	nolog2 = ['user_cat_aveThreeDayDelta_click','user_cat_aveThreeDayDelta_star','user_cat_aveThreeDayDelta_add_car','user_cat_aveThreeDayDelta_buy','user_item_aveThreeDayDelta_click','user_item_aveThreeDayDelta_star','user_item_aveThreeDayDelta_add_car','user_item_aveThreeDayDelta_buy']
 	factor_features = [
 		"user_item_click_nobuy",
 		"user_item_star_nobuy",
 		"user_item_cart_nobuy",
 		"user_item_buy_again"
 	]
-	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features]
+	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features and not in nolog2]
 	
 	X1 = np.log(0.3+data[feature_names])
 	X2 = dict()
@@ -101,7 +102,11 @@ def GetFeature(data):
 	
 	X3 = data[factor_features]
 	
-	X = pandas.concat([X1, X2, X3], axis=1)
+	feature_names2= [i for i in data.columns if i in nolog2]
+	
+	X4 = np.copysign(np.log(0.3+np.abs(data[feature_names2])),np.sign(data[feature_names2]))
+	
+	X = pandas.concat([X1, X2, X3, X4], axis=1)
 	
 	
 	
@@ -125,10 +130,10 @@ if __name__ == '__main__':
 	feature_names = X.columns
 	parms = {
 	'C': np.logspace(-2,3,10),  # 0.5是最好的
-	'class_weight':[{0:1,1:r} for r in np.linspace(1,10,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
+	#'class_weight':[{0:1,1:r} for r in np.linspace(1,10,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression(penalty='l1')
-	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=20)
+	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
 
 	clf.fit(X,Y)
 	

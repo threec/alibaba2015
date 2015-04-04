@@ -1,6 +1,6 @@
 # coding:utf-8
 # util
-import imp, smtplib, os, re
+import imp, smtplib, os, re, time
 from email.mime.text import MIMEText
 
 def file_basename(fn):
@@ -15,6 +15,24 @@ def file_basename_id(fn):
 
 	return int(fid.group())
 	
+	
+def IncDict(d, key):
+	if key in d:
+		d[key] = d[key] + 1
+	else:
+		d[key] = 1
+
+def GetDict(d, key):
+	if key in d:
+		return d[key]
+	else:
+		return 0
+def DiffTime(t1, t2):
+	t1 = time.mktime(time.strptime(t1,'%Y-%m-%d %H'))
+	t2 = time.mktime(time.strptime(t2,'%Y-%m-%d %H'))
+	return t1 - t2
+
+
 def load_model_from_name(name):
 	
 	fp, pathname, description = imp.find_module(name)
@@ -33,6 +51,7 @@ def send_email(title, email_str):
 	s.quit()
 def notify_me(msg):
 	send_email(msg, msg)
+	
 	
 if __name__ == '__main__':
 	notify_me('test')
