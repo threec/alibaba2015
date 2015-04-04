@@ -10,11 +10,14 @@ m = r.findall(s)
 
 print '"' + '",\n"'.join(m) + '"'
 
-user = False
-item = False
-cat = False
+
 for k in m:
+
 	w = k.split('_')
+	user = False
+	item = False
+	cat = False
+	
 	if 'user' in w:
 		user = True
 	if 'item' in w:

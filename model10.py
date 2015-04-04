@@ -46,49 +46,8 @@ def GetFeature(data):
 	
 	X = pandas.concat([X1, X2], axis=1)
 	
-	feature_names = [
-		"user_action_count",
-		"user_lastday_count",
-		"user_buy_count",
-		"item_click_count",
-		"item_lastday_count",
-		"item_buy_count",
-		"cat_click_count",
-		"cat_buy_count",
-		"user_cat_count",
-		"user_cat_lastday_count",
-		"user_item_count",
-		"user_item_lastday_count",
-		"user_add_car",
-		"user_add_star",
-		"item_added_car",
-		"item_added_start",
-		"user_item_lasttime",
-		"cat_add_car",
-		"cat_add_star",
-		"user_item_buy",
-		"user_item_before_halfmonth_click",
-		"user_item_before_halfmonth_star",
-		"user_item_before_halfmonth_add_car",
-		"user_item_before_halfmonth_buy",
-		"user_cat_halfmonth_star",
-		"user_cat_before_halfmonth_click",
-		"user_cat_before_halfmonth_star",
-		"user_cat_before_halfmonth_add_car",
-		"user_cat_before_halfmonth_buy",
-		"user_lastday_add_star",
-		"user_item_lastday_add_star",
-		"user_cat_lastday_add_star",
-		"user_lastday_add_cart",
-		"user_item_lastday_add_cart",
-		"user_cat_lastday_add_cart",
-		"user_lastday_buy",
-		"user_item_lastday_buy",
-		"user_cat_lastday_buy",
-		"item_convert_rate",
-		"user_convert_rate",
-		]
-	return X[feature_names]
+	
+	return X
 
 		
 def GetModel():

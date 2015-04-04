@@ -1,8 +1,20 @@
 # coding:utf-8
 # util
-import imp, smtplib
+import imp, smtplib, os, re
 from email.mime.text import MIMEText
 
+def file_basename(fn):
+	fname = os.path.basename(fn)
+	fname = fname[:fname.rindex('.')]
+	return fname
+def file_basename_id(fn):
+	fname = file_basename(fn)
+	fid = re.search('\d+', fname)
+	if fid is None:
+		return 1
+
+	return int(fid.group())
+	
 def load_model_from_name(name):
 	
 	fp, pathname, description = imp.find_module(name)

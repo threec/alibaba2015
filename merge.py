@@ -22,6 +22,11 @@ for df1 in r1:
 		sys.exit()
 	if np.sum(np.sum(df1[['user_id', 'item_id']] == df2[['user_id', 'item_id']]))!=2*len(df1):
 		print 'key error'
+		
+		for i in range(len(df1)):
+			if not ((df1['user_id'][i] == df2['user_id'][i]) && (df1['item_id'][i] == df2['item_id'][i])):
+				print '%dth row dismatch.' % (i+1)
+		
 		sys.exit()
 	df = pandas.concat([df1, df2[[field for field in df2.keys() if field not in ['user_id', 'item_id']]]], axis=1)
 	df.to_csv(sys.argv[3], mode=mod, header = header,index = False)

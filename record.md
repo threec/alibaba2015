@@ -603,3 +603,83 @@
 
 	F1      P       R
 	9.19    6.35    16.63
+	
+	
+	
+#### ====== 记录=======
+	best score 0.228346300866
+	best parms {'C': 10.0}
+	clf parms:
+	intercept       -0.057189
+	user_action_count       -0.521748
+	user_lastday_count      -0.008182
+	user_buy_count  0.414034
+	item_click_count        -0.190652
+	item_lastday_count      0.083779
+	item_buy_count  0.155922
+	cat_click_count -0.610941
+	cat_buy_count   0.749927
+	user_cat_count  -0.502132
+	user_cat_lastday_count  0.326462
+	user_item_count 4.166696
+	user_item_lastday_count 0.681126
+	user_add_car    -0.121371
+	user_add_star   0.093671
+	item_added_car  0.226864
+	item_added_start        -0.050703
+	user_item_lasttime      -0.001870
+	cat_add_car     -0.197033
+	cat_add_star    0.037219
+	user_item_buy   -0.499866
+	user_item_lastweek_click        0.000000
+	user_item_lastweek_star 0.000000
+	user_item_lastweek_add_car      0.000000
+	user_item_lastweek_buy  0.000000
+	user_item_halfmonth_click       0.000000
+	user_item_halfmonth_star        0.000000
+	user_item_halfmonth_add_car     0.000000
+	user_item_halfmonth_buy 0.000000
+	user_item_before_halfmonth_click        -2.416822
+	user_item_before_halfmonth_star -0.211741
+	user_item_before_halfmonth_add_car      0.018093
+	user_item_before_halfmonth_buy  -0.362747
+	user_cat_lastweek_click 0.000000
+	user_cat_lastweek_star  0.000000
+	user_cat_lastweek_add_car       0.000000
+	user_cat_lastweek_buy   0.000000
+	user_cat_halfmonth_click        0.000000
+	user_cat_halfmonth_star 1.145733
+	user_cat_halfmonth_add_car      0.000000
+	user_cat_halfmonth_buy  0.000000
+	user_cat_before_halfmonth_click 0.287978
+	user_cat_before_halfmonth_star  0.072676
+	user_cat_before_halfmonth_add_car       0.147421
+	user_cat_before_halfmonth_buy   -0.120659
+	user_lastday_add_star   -0.024881
+	user_item_lastday_add_star      0.347383
+	user_cat_lastday_add_star       -0.251742
+	user_lastday_add_cart   0.037017
+	user_item_lastday_add_cart      0.861920
+	user_cat_lastday_add_cart       -0.132907
+	user_lastday_buy        -0.130404
+	user_item_lastday_buy   -0.640501
+	user_cat_lastday_buy    -0.594544
+	item_convert_rate       0.402244
+	user_convert_rate       1.084939
+
+
+	F1      P       R
+	22.33   56.71   13.90
+
+			F       T
+	N       136832  71
+	P       576     93
+
+
+	===== for test =====
+			F       T
+	N       1831380 1059
+	P       349     72
+
+	F1      P       R
+	9.28    6.37    17.10

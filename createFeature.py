@@ -81,7 +81,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			user_items.add('%s_%s' % (uid,tid))
 			item_cat[tid] = cid
 			
-			#diff_time = DiffTime('%s 00' % lastday, row[5])
+			#diff_time = DiffTime('%s 00' % lastday, row[5]) + 24*24*3600
 			#print diff_time, diff_time<6*24*3600
 			
 			IncDict(user_action_count, uid)
