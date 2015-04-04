@@ -15,7 +15,7 @@ def GetData():
 	X=GetFeature(data)
 	
 	
-	Y=data['buy'].as_matrix()
+	Y=data['buy']
 	
 	return X, Y
 	
@@ -23,7 +23,7 @@ def GetFeature(data):
 	data['item_to_cat_rate'] = data['user_item_lastday_count'] / (1 + data['user_cat_lastday_count'])
 	data['user_item_lastday_count'] = np.log(0.3+data['user_item_lastday_count'])
 	
-	X=data[['user_item_lastday_count','item_to_cat_rate']].as_matrix()
+	X=data[['user_item_lastday_count','item_to_cat_rate']]
 	
 	return X
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
 	parms = {
 	'C':np.logspace(-6,0,10),
-	'class_weight':[{0:1,1:200}] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
+	#'class_weight':[{0:1,1:200}] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression()
 	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)

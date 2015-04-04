@@ -45,7 +45,7 @@ def TestModel(modelname):
 	print '===== for test ====='
 	
 	block_size = 100000
-	reader = pandas.read_csv('data.csv', iterator=True, chunksize=block_size)
+	reader = pandas.read_csv('data.test.csv', iterator=True, chunksize=block_size)
 	TP = 0.
 	TN = 0.
 	FP = 0.

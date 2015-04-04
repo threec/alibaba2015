@@ -7,10 +7,6 @@ import pandas,sys
 import numpy as np
 
 
-if len(sys.argv)!=2:
-	mode = 'train'
-else:
-	mode = sys.argv[1]
 
 np.random.seed(44)
 
@@ -19,25 +15,38 @@ reader = pandas.read_csv('data.csv', iterator=True, chunksize=block_size)
 
 header = True
 mod = 'w'
-nrows = 0
-trows = 0
+train_rows = 0
+test_rows = 0
+train_trows = 0
+test_trows = 0
 rows = 0
+
+fname1 = 'data.train.csv'
+fname2 = 'data.test.csv'
+
 for data in reader:
-	if mode=='train':
-		idx = (data['buy']==1) | (np.random.rand(len(data))<.05) # 0.02
-		fname = 'data.train.csv'
-	else:
-		idx = (np.random.rand(len(data))<0.2) 
-		fname = 'data.test.csv'
 	
-	data[idx].to_csv(fname, mode=mod, header = header,index = False)
+	spl = np.random.rand(len(data))<.6  # train : test = 6:4
+	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.05)) # 0.02
+	test = spl == False
+	
+	#print train[:10]
+	#print test[:10]
+	#print 
+	assert np.sum((train==True) & (test==True))==0
+	data[train].to_csv(fname1, mode=mod, header = header,index = False)
+	data[test].to_csv(fname2, mode=mod, header = header,index = False)
+	
 	header = False
 	mod = 'a'
 	
-	nrows = np.sum(idx) + nrows
-	trows = np.sum(data['buy'][idx]==1) + trows
+	train_rows = np.sum(train) + train_rows
+	test_rows = np.sum(test) + test_rows
+	train_trows = np.sum(data['buy'][train]==1) + train_trows
+	test_trows = np.sum(data['buy'][test]==1) + test_trows
+	
 	rows = rows + len(data)
 	print 'process %d rows!' % rows
 	# print data.head()
 	
-print 'sample %d rows, positive %d rows.' % (nrows, trows)
+print 'sample %d rows, positive %d rows for train. %d rows, positive %d rows for test' % (train_rows, train_trows, test_rows, test_trows)

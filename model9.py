@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'C':[1],# np.logspace(-3,0,10),
+	'C': np.logspace(-2,-0.5,10),  # 0.5是最好的
 	#'class_weight':[{0:1,1:r} for r in np.logspace(0,2,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression(penalty='l1')

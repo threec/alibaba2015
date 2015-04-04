@@ -9,7 +9,7 @@ from sklearn.grid_search import GridSearchCV
 
 def GetFeature(data):
 	
-	X=np.log(0.3+data[['user_item_lastday_count','user_cat_lastday_count']].as_matrix())
+	X=np.log(0.3+data[['user_item_lastday_count','user_cat_lastday_count']])
 
 	# print X
 	return X
@@ -18,7 +18,7 @@ def GetData():
 	data = pandas.read_csv('data.train.csv')
 	
 	X = GetFeature(data)
-	Y=data['buy'].as_matrix()
+	Y=data['buy']
 		
 	return X, Y
 	
@@ -50,10 +50,10 @@ if __name__ == '__main__':
 	
 	pred = clf.predict(X)
 	
-	from summary import summary,clf_summary,TestMode
+	from summary import summary,clf_summary,TestModel
 	clf_summary(clf)
 	summary(Y, pred)
-	TestMode('model2')
+	TestModel('model2')
 	
 	
 
