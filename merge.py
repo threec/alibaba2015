@@ -24,7 +24,7 @@ for df1 in r1:
 		print 'key error'
 		
 		for i in range(len(df1)):
-			if not ((df1['user_id'][i] == df2['user_id'][i]) && (df1['item_id'][i] == df2['item_id'][i])):
+			if not ((df1['user_id'][i] == df2['user_id'][i]) and (df1['item_id'][i] == df2['item_id'][i])):
 				print '%dth row dismatch.' % (i+1)
 		
 		sys.exit()
