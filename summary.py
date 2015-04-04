@@ -74,6 +74,11 @@ def TestModel(modelname):
 	# print clf.grid_scores_
 	# return TP,TN,FP,FN
 		
+def SelectFeature(clf, feature_names):
+	for i in range(len(feature_names)):
+		if np.abs(clf.best_estimator_.coef_[0][i])>1e-4:
+			print '"%s",\n' % feature_names[i],
+
 if __name__ == '__main__':
 	
 	

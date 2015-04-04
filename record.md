@@ -683,3 +683,73 @@
 
 	F1      P       R
 	9.28    6.37    17.10
+	
+	
+## model10
+
+	best score 0.224867666147
+	best parms {'C': 5.9948425031894086}
+	clf parms:
+	intercept       -0.137796
+	user_action_count       -0.530330
+	user_lastday_count      -0.008653
+	user_buy_count  0.425831
+	item_click_count        -0.185507
+	item_lastday_count      0.079314
+	item_buy_count  0.176756
+	cat_click_count -0.609604
+	cat_buy_count   0.737831
+	user_cat_count  -0.452063
+	user_cat_lastday_count  0.327599
+	user_item_count 4.166340
+	user_item_lastday_count 0.690345
+	user_add_car    -0.122329
+	user_add_star   0.092889
+	item_added_car  0.218570
+	item_added_start        -0.068368
+	user_item_lasttime      -0.058002
+	cat_add_car     -0.184029
+	cat_add_star    0.032016
+	user_item_buy   -0.521416
+	user_item_lastweek_star 0.377425
+	user_item_before_halfmonth_click        -2.412691
+	user_item_before_halfmonth_star -0.449780
+	user_item_before_halfmonth_add_car      -0.137746
+	user_item_before_halfmonth_buy  -0.416321
+	user_cat_lastweek_star  0.371491
+	user_cat_halfmonth_buy  0.040139
+	user_cat_before_halfmonth_click 0.238205
+	user_cat_before_halfmonth_star  0.074419
+	user_cat_before_halfmonth_add_car       0.139552
+	user_cat_before_halfmonth_buy   -0.109298
+	user_lastday_add_star   -0.023306
+	user_item_lastday_add_star      0.333326
+	user_cat_lastday_add_star       -0.254875
+	user_lastday_add_cart   0.035361
+	user_item_lastday_add_cart      0.827894
+	user_cat_lastday_add_cart       -0.136018
+	user_lastday_buy        -0.127181
+	user_item_lastday_buy   -0.647401
+	user_cat_lastday_buy    -0.613243
+	item_convert_rate       -0.252983
+	user_item_click_nobuy   0.210148
+	user_item_star_nobuy    0.407423
+	user_item_cart_nobuy    0.326381
+	user_item_buy_again     0.925407
+
+
+	F1      P       R
+	22.30   56.36   13.90
+
+			F       T
+	N       136831  72
+	P       576     93
+
+
+	===== for test =====
+			F       T
+	N       1831380 1059
+	P       351     70
+
+	F1      P       R
+	9.03    6.20    16.63
