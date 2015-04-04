@@ -530,3 +530,76 @@
 
 	F1      P       R
 	8.90    6.14    16.15
+	
+	
+	分开训练集和测试集
+
+	best score 0.221799101661
+	best parms {'C': 0.31622776601683794}
+	clf parms:
+	intercept       0.000000
+	user_action_count       -0.441908
+	user_lastday_count      -0.015867
+	user_buy_count  0.303836
+	item_click_count        -0.210976
+	item_lastday_count      0.031571
+	item_buy_count  0.038037
+	cat_click_count -0.517445
+	cat_buy_count   0.690812
+	user_cat_count  -0.171438
+	user_cat_lastday_count  0.150967
+	user_item_count 1.140760
+	user_item_lastday_count 0.614176
+	user_add_car    -0.057524
+	user_add_star   0.082944
+	item_added_car  0.349464
+	item_added_start        0.000000
+	user_item_lasttime      0.043606
+	cat_add_car     -0.172854
+	cat_add_star    -0.007370
+	user_item_buy   -0.602371
+	user_item_lastweek_click        0.365752
+	user_item_lastweek_star 0.343867
+	user_item_lastweek_add_car      0.809786
+	user_item_lastweek_buy  0.000000
+	user_item_halfmonth_click       0.046286
+	user_item_halfmonth_star        -0.100908
+	user_item_halfmonth_add_car     -0.032098
+	user_item_halfmonth_buy 0.137501
+	user_item_before_halfmonth_click        -0.215836
+	user_item_before_halfmonth_star 0.000000
+	user_item_before_halfmonth_add_car      0.000000
+	user_item_before_halfmonth_buy  0.555807
+	user_cat_lastweek_click 0.127782
+	user_cat_lastweek_star  -0.031270
+	user_cat_lastweek_add_car       0.119557
+	user_cat_lastweek_buy   -0.725741
+	user_cat_halfmonth_click        -0.060077
+	user_cat_halfmonth_star -0.036643
+	user_cat_halfmonth_add_car      -0.054867
+	user_cat_halfmonth_buy  0.143869
+	user_cat_before_halfmonth_click -0.060219
+	user_cat_before_halfmonth_star  0.000000
+	user_cat_before_halfmonth_add_car       -0.031587
+	user_cat_before_halfmonth_buy   0.434426
+	item_convert_rate       0.000000
+	user_convert_rate       0.000000
+
+
+
+
+	F1      P       R
+	22.14   56.79   13.75
+
+			F       T
+	N       136833  70
+	P       577     92
+
+
+	===== for test =====
+			F       T
+	N       1831407 1032
+	P       351     70
+
+	F1      P       R
+	9.19    6.35    16.63
