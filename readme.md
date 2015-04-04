@@ -7,6 +7,7 @@ gen_label_data.py 将第二个文件生成标签文件
 3. gen_data.py 将特征和标签文件融合到data.csv中
 4. data_sample.py 将data.csv划分为训练data.train.csv和测试文件data.test.csv，其中训练数据对付样本进行下采样。
 5. model0.py 模型训练文件，不解释
+6. gen_rec_data.py 利用模型和提交数据用的特征进行预测，生成提交文件
 
 ## 工具
 summary.py 对已训练模型进行评价
