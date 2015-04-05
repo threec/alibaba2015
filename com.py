@@ -41,6 +41,13 @@ def GetGeoTree():
 	util.save_obj(geo_tree, 'geotree')
 	
 	return geo_tree
+def GeoMatch(geo_hash, geo_list):
+	geo_set = set(geo_list)
+	max_len = max([len(i) for i in geo_set])
+	for i in range(max_len,0,-1):
+		if geo_hash[:i] in geo_set:
+			return geo_hash[:i]
+	
 
 if __name__ == '__main__':
 	GetItemGeo()
