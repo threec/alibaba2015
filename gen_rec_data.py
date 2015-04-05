@@ -30,7 +30,7 @@ items = pandas.read_csv('tianchi_mobile_recommend_train_item.csv')
 items = set(items['item_id'])
 
 
-block_size = 100000
+block_size = 10000
 fr = pandas.read_csv('feature_total.merge.csv', iterator=True, chunksize=block_size)
 
 

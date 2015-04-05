@@ -1,6 +1,6 @@
 # coding:utf-8
 
-import csv, time,sys,util
+import csv, time,sys
 import numpy as np
 
 
@@ -145,10 +145,8 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	fd.close()	
 
 
-	
 if __name__ == '__main__':
-	fid = util.file_basename_id(__file__)
 	if sys.argv[1]=='train':
-		GenFeature('user_action_train.csv', 'feature%d.csv' % fid, lastday='2014-12-17')
+		GenFeature('user_action_train.csv', 'feature5_delta_uitem.csv', lastday='2014-12-17')
 	if sys.argv[1]=='submit':
-		GenFeature('tianchi_mobile_recommend_train_user.csv', 'feature_total%d.csv' % fid, lastday='2014-12-18')
+		GenFeature('tianchi_mobile_recommend_train_user.csv', 'feature_total5_delta_uitem.csv', lastday='2014-12-18')

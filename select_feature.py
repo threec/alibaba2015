@@ -12,6 +12,13 @@ clf = model.GetModel()
 X,Y = model.GetData()
 feature_names = X.keys()
 
+eps = 1e-4
 for i in range(len(feature_names)):
-	if np.abs(clf.best_estimator_.coef_[0][i])>1e-4:
+	if np.abs(clf.best_estimator_.coef_[0][i])>=eps:
 		print '"%s",\n' % feature_names[i],
+print '\n'
+
+for i in range(len(feature_names)):
+	if np.abs(clf.best_estimator_.coef_[0][i])<eps:
+		print '"%s",\n' % feature_names[i],
+		

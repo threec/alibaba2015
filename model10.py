@@ -124,7 +124,7 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'C': np.logspace(-2,3,10),  # 0.5是最好的
+	'C': np.logspace(-2,1,10),  # 0.5是最好的
 	# 'class_weight':[{0:1,1:r} for r in np.linspace(1,10,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression(penalty='l1')

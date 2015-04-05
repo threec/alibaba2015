@@ -51,7 +51,6 @@ _feature_names = [
 	"item_added_start",
 	"user_item_lasttime",
 	"cat_add_car",
-	"cat_add_star",
 	"user_item_buy",
 	"user_item_before_halfmonth_click",
 	"user_item_before_halfmonth_star",
@@ -69,8 +68,11 @@ _feature_names = [
 	"user_cat_lastday_add_cart",
 	"user_lastday_buy",
 	"user_item_lastday_buy",
-	"user_cat_lastday_buy",
-	"user_item_click_nobuy",
+	"user_geo_f",
+	"user_geo_m",
+	"user_geo_o",
+	"user_geo_9",
+	"user_geo_t",
 	"user_item_star_nobuy",
 	"user_item_cart_nobuy",
 	"user_item_buy_again",
@@ -81,9 +83,6 @@ _feature_names = [
 	"user_item_aveThreeDayDelta_click",
 	"user_item_aveThreeDayDelta_star",
 	"user_item_aveThreeDayDelta_add_car",
-	"user_item_aveThreeDayDelta_buy",
-
-
 	]
 def GetFeature(data):
 
@@ -132,11 +131,11 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'C': np.logspace(-2,2,10),  # 
-	#'class_weight':[{0:1,1:r} for r in np.linspace(1,3,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
+	'C': np.logspace(-1,0,4),  # 
+	# 'class_weight':[{0:1,1:1}] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
 	lr = LogisticRegression(penalty='l1')
-	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=20)
+	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
 
 	clf.fit(X,Y)
 	

@@ -25,14 +25,13 @@ def clf_summary(clf, feature_names=None):
 	print 'best score', clf.best_score_
 	print 'best parms', clf.best_params_
 	
+	print 'clf parms (%d features):' % len(clf.best_estimator_.coef_[0])
 	if feature_names is None:
-		print 'clf parms:',
 		print clf.best_estimator_.intercept_[0],
 		for c in clf.best_estimator_.coef_[0]:
 			print c,
 		print '\n'
 	else:
-		print 'clf parms:'
 		print 'intercept\t%.6f' % clf.best_estimator_.intercept_[0]
 		for i in range(len(clf.best_estimator_.coef_[0])):
 			print '%s\t%.6f' % (feature_names[i],clf.best_estimator_.coef_[0][i])
@@ -45,7 +44,7 @@ def TestModel(modelname):
 	
 	print '===== for test ====='
 	
-	block_size = 100000
+	block_size = 10000
 	reader = pandas.read_csv('data.test.csv', iterator=True, chunksize=block_size)
 	TP = 0.
 	TN = 0.
