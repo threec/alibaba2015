@@ -5,7 +5,7 @@
 
 import pandas,sys
 import numpy as np
-from com import GetRecIterms
+from com import GetRecItems
 
 np.random.seed(44)
 
@@ -18,19 +18,21 @@ train_rows = 0
 test_rows = 0
 train_trows = 0
 test_trows = 0
+online_rows = 0
+online_trows = 0
 rows = 0
 
 fname1 = 'data.train.csv'
 fname2 = 'data.test.csv'
 fname3 = 'data.onlinetest.csv'
 
-items = GetRecIterms()
+items = GetRecItems()
 
 for data in reader:
 	
 	spl = np.random.rand(len(data))<.6  # train : test = 6:4
-	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.05)) # 0.02
-	test = spl == False
+	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.03)) # 0.03
+	test = spl == False 
 	
 	onlinetest = spl == False
 	for i in range(len(onlinetest)):
@@ -51,9 +53,10 @@ for data in reader:
 	test_rows = np.sum(test) + test_rows
 	train_trows = np.sum(data['buy'][train]==1) + train_trows
 	test_trows = np.sum(data['buy'][test]==1) + test_trows
-	
+	online_rows = np.sum(onlinetest) + online_rows
+	online_trows = np.sum(data['buy'][onlinetest]==1) + online_trows
 	rows = rows + len(data)
 	print 'process %d rows!' % rows
 	# print data.head()
 	
-print 'sample %d rows, positive %d rows for train. %d rows, positive %d rows for test' % (train_rows, train_trows, test_rows, test_trows)
+print 'sample %d rows, positive %d rows for train. %d rows, positive %d rows for test. %d rows, positive %d rows for online test.' % (train_rows, train_trows, test_rows, test_trows, online_rows, online_trows)

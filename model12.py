@@ -93,7 +93,8 @@ def GetFeature(data):
 		"user_item_click_nobuy",
 		"user_item_star_nobuy",
 		"user_item_cart_nobuy",
-		"user_item_buy_again"
+		"user_item_buy_again",
+		"user_geo_b","user_geo_f","user_geo_i","user_geo_m","user_geo_o","user_geo_5","user_geo_4","user_geo_v","user_geo_9","user_geo_t"
 	]
 	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features and i not in nolog2]
 	
@@ -113,7 +114,7 @@ def GetFeature(data):
 	
 	
 	
-	return X[_feature_names]
+	return X #[_feature_names]
 
 		
 def GetModel():

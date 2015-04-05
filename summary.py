@@ -73,6 +73,15 @@ def TestModel(modelname):
 	print '%.2f\t%.2f\t%.2f' % (F1*100, P*100, R*100)
 	# print clf.grid_scores_
 	# return TP,TN,FP,FN
+	
+	print ''
+	
+	print '===== for online test ====='
+	data = pandas.read_csv('data.onlinetest.csv')
+	X = model.GetFeature(data)
+	Y = data['buy']
+	pred = clf.predict(X)
+	summary(Y, pred)
 		
 def SelectFeature(clf, feature_names):
 	for i in range(len(feature_names)):

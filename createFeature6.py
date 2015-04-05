@@ -6,15 +6,10 @@ import numpy as np
 
 
 # 特征生成文件6, user geo feature
-user_geo1 = dict()	
-user_geo2 = dict()
-user_geo3 = dict()
-user_geo4 = dict()
-user_geo5 = dict()
-user_geo6 = dict()
-user_geo7 = dict()
+user_geo = dict()	
 
 
+geo_ids = set()
 
 
 def IncDict(d, key):
@@ -103,7 +98,14 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			
 			
 			
-				
+			geoid = row[3][:1]
+			if geoid is not '':
+				geo_ids.add(geoid)
+				if geoid not in user_geo:
+					user_geo[uid] = dict()
+					
+				user_geo[uid][geoid] = 1
+			
 				
 			
 			
@@ -118,9 +120,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	fd = open(foutput,'wb')
 	fw = csv.writer(fd, delimiter=',')
 
-	fw.writerow(['user_id', 'item_id',
-		
-	])
+	fw.writerow(['user_id', 'item_id'] + ['user_geo_%s' % i for i in geo_ids])
 	
 	for key in user_items:
 		uid, tid = key.split('_')
@@ -129,13 +129,13 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		ucid = '%s_%s' % (uid, cid)
 			
 			
-		
-		
+		if uid not in user_geo:
+			geodata = [0 for g in geo_ids]
+		else:
+			geodata = [GetDict(user_geo[uid], g) for g in geo_ids]
 	
 		data = [uid, tid,
-		
-		
-			]
+			] + geodata
 		
 		fw.writerow(data)
 		
