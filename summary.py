@@ -37,6 +37,7 @@ def clf_summary(clf, feature_names=None):
 		for i in range(len(clf.best_estimator_.coef_[0])):
 			print '%s\t%.6f' % (feature_names[i],clf.best_estimator_.coef_[0][i])
 		print '\n'
+	
 
 def TestModel(modelname):
 	model = util.load_model_from_name(modelname)
@@ -83,6 +84,8 @@ def TestModel(modelname):
 	pred = clf.predict(X)
 	summary(Y, pred)
 		
+	return F1,P,R
+	
 def SelectFeature(clf, feature_names):
 	for i in range(len(feature_names)):
 		if np.abs(clf.best_estimator_.coef_[0][i])>1e-4:

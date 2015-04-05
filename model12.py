@@ -94,7 +94,8 @@ def GetFeature(data):
 		"user_item_star_nobuy",
 		"user_item_cart_nobuy",
 		"user_item_buy_again",
-		"user_geo_b","user_geo_f","user_geo_i","user_geo_m","user_geo_o","user_geo_5","user_geo_4","user_geo_v","user_geo_9","user_geo_t"
+		"user_geo_b","user_geo_f","user_geo_i","user_geo_m","user_geo_o","user_geo_5","user_geo_4","user_geo_v","user_geo_9","user_geo_t",
+		"item_geo_9","item_geo_4","item_geo_m","item_geo_t","item_geo_f",
 	]
 	feature_names = [i for i in data.columns if i not in nolog and i not in factor_features and i not in nolog2]
 	
@@ -154,8 +155,8 @@ if __name__ == '__main__':
 	summary.summary(Y, pred)
 	
 	
-	TestModel()
+	F1, P, R = TestModel()
 	
-	util.notify_me('%s is finished' % __fname__)
+	util.notify_me('%s.F1:%.2f,P:%.2f,R:%.2f' % (__fname__, F1*100, P*100, R*100))
 
 
