@@ -116,7 +116,7 @@ def GetFeature(data):
 	
 	
 	
-	return X #[_feature_names]
+	return X[_feature_names]
 
 		
 def GetModel():
@@ -127,7 +127,7 @@ def GetModel():
 	return clf
 
 def TestModel():
-	summary.TestModel(__fname__)
+	return summary.TestModel(__fname__)
 	
 if __name__ == '__main__':
 	

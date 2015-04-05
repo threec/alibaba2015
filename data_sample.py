@@ -31,7 +31,7 @@ items = GetRecItems()
 for data in reader:
 	
 	spl = np.random.rand(len(data))<.6  # train : test = 6:4
-	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.045)) # 0.03
+	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.045)) # 0.045
 	test = spl == False 
 	
 	onlinetest = spl == False
