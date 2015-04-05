@@ -23,6 +23,7 @@ def GetItemGeo():
 			item_geo[tid].add(geo)
 	return item_geo
 def GetGeoTree():
+	# print os.path.exists('geotree')
 	if os.path.exists('geotree'):
 		tree = util.load_obj('geotree')
 		return tree
@@ -37,7 +38,7 @@ def GetGeoTree():
 				util.IncDict(geo_count, i[:3])
 		util.IncDict(geo_count, i[:1])
 	geo_tree = {i:geo_count[i] for i in geo_count.keys() if geo_count[i]>1e5 or len(i)==1}
-	util.save_obj(geo_tree, 'geo_tree')
+	util.save_obj(geo_tree, 'geotree')
 	
 	return geo_tree
 
