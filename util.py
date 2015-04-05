@@ -1,6 +1,6 @@
 # coding:utf-8
 # util
-import imp, smtplib, os, re, time
+import imp, smtplib, os, re, time, pickle
 from email.mime.text import MIMEText
 
 def file_basename(fn):
@@ -51,7 +51,15 @@ def send_email(title, email_str):
 	s.quit()
 def notify_me(msg):
 	send_email(msg, msg)
-	
+def save_obj(obj, fn):
+	f = open(fn, 'wb')
+	pickle.dump(obj, f)
+	f.close()
+def load_obj(fn):
+	f = open(fn, 'rb')
+	obj = pickle.load(f)
+	f.close()
+	return obj
 	
 if __name__ == '__main__':
 	notify_me('test')
