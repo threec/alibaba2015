@@ -9,7 +9,7 @@ f = []
 fr = []
 
 fns = len(sys.argv)-2
-for i in range(fns):
+for i in range(1,fns+1):
 	fd = open(sys.argv[i],'rb')
 	f.append(fd)
 	reader = csv.reader(fd, delimiter=',')
@@ -20,13 +20,17 @@ fw = csv.writer(fo, delimiter=',')
 
 header = fr[0].next()
 for i in range(1,fns):
-	header.append(fr[0].next()[2:])
+	header = header + fr[i].next()[2:]
 
 fw.writerow(header)
 nrows = 0
 for row in fr[0]:
 	for i in range(1,fns):
-		row.append(fr[i].next()[2:])
+		newdata = fr[i].next()
+		if row[0]!=newdata[0] or row[1]!=newdata[1]:
+			print 'key error happen at %d row.' % (nrows+1)
+			sys.exit()
+		row = row + newdata[2:]
 	
 	fw.writerow(row)
 	nrows = nrows + 1

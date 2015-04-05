@@ -2,7 +2,7 @@
 
 import csv, time,sys
 import numpy as np
-
+from com import GetRecItems
 
 
 # 用户总活跃度(所有行为次数之和)
@@ -57,8 +57,6 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	
 	cat_add_car = dict()
 	cat_add_star = dict()
-	
-	
 	
 	
 	user_items = set()  # 其实是用户物品对
@@ -181,8 +179,8 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			GetDict(user_add_star, uid),
 			GetDict(item_added_car, tid),
 			GetDict(item_added_start, tid),
-			time.mktime(time.strptime(GetDict(user_item_lasttime, '%s_%s' % (uid, tid)),'%Y-%m-%d %H')),
 			
+			DiffTime('%s 00' % lastday, row[5]) + 24*24*3600,
 			GetDict(cat_add_car, cid),
 			GetDict(cat_add_star, cid)
 			

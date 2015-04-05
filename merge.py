@@ -4,8 +4,9 @@
 import csv, sys, pandas
 import numpy as np
 
-if len(sys.argv)!=4:
-	print 'usage  python merge.py file1 file2 file3'
+if len(sys.argv)<4:
+	print 'usage  python merge.py file1 file2 ... file_out'
+	
 	
 block_size = 100000
 r1 = pandas.read_csv(sys.argv[1], iterator=True, chunksize=block_size)

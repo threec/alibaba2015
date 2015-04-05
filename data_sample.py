@@ -5,8 +5,7 @@
 
 import pandas,sys
 import numpy as np
-
-
+from com import GetRecIterms
 
 np.random.seed(44)
 
@@ -23,6 +22,9 @@ rows = 0
 
 fname1 = 'data.train.csv'
 fname2 = 'data.test.csv'
+fname3 = 'data.onlinetest.csv'
+
+items = GetRecIterms()
 
 for data in reader:
 	
@@ -30,12 +32,17 @@ for data in reader:
 	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.05)) # 0.02
 	test = spl == False
 	
+	onlinetest = spl == False
+	for i in range(len(onlinetest)):
+		if onlinetest[i] and data['item_id'][i] not in items: 
+			onlinetest[i] = False
 	#print train[:10]
 	#print test[:10]
 	#print 
 	assert np.sum((train==True) & (test==True))==0
 	data[train].to_csv(fname1, mode=mod, header = header,index = False)
 	data[test].to_csv(fname2, mode=mod, header = header,index = False)
+	data[onlinetest].to_csv(fname3, mode=mod, header = header,index = False)
 	
 	header = False
 	mod = 'a'
