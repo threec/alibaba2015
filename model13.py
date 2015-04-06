@@ -42,13 +42,13 @@ _feature_names = [
 	"item_buy_count",
 	"cat_click_count",
 	"cat_buy_count",
+	"user_cat_count",
 	"user_cat_lastday_count",
 	"user_item_count",
 	"user_item_lastday_count",
 	"user_add_car",
 	"user_add_star",
 	"item_added_car",
-	"item_added_start",
 	"user_item_lasttime",
 	"cat_add_car",
 	"cat_add_star",
@@ -58,7 +58,6 @@ _feature_names = [
 	"user_item_before_halfmonth_add_car",
 	"user_item_before_halfmonth_buy",
 	"user_cat_before_halfmonth_click",
-	"user_cat_before_halfmonth_star",
 	"user_cat_before_halfmonth_add_car",
 	"user_cat_before_halfmonth_buy",
 	"user_lastday_add_star",
@@ -70,19 +69,32 @@ _feature_names = [
 	"user_lastday_buy",
 	"user_item_lastday_buy",
 	"user_cat_lastday_buy",
+	"item_convert_rate",
 	"user_item_click_nobuy",
+	"user_item_star_nobuy",
 	"user_item_cart_nobuy",
 	"user_item_buy_again",
 	"user_geo_f",
 	"user_geo_m",
 	"user_geo_9",
+	"user_geo_t",
 	"user_cat_aveThreeDayDelta_click",
+	"user_cat_aveThreeDayDelta_star",
 	"user_cat_aveThreeDayDelta_add_car",
 	"user_cat_aveThreeDayDelta_buy",
 	"user_item_aveThreeDayDelta_click",
 	"user_item_aveThreeDayDelta_star",
 	"user_item_aveThreeDayDelta_add_car",
 	"user_item_aveThreeDayDelta_buy",
+	"usergeo_item_lastday_click",
+	"usergeo_item_lastday_star",
+	"usergeo_item_lastday_cart",
+	"usergeo_item_lastday_buy",
+	"usergeo_item_before_lastday_click",
+	"usergeo_item_before_lastday_star",
+	"usergeo_item_before_lastday_cart",
+	"usergeo_item_before_lastday_buy",
+
 
 
 	]
@@ -119,7 +131,7 @@ def GetFeature(data):
 	
 	
 	
-	return X #[_feature_names]
+	return X[_feature_names]
 
 		
 def GetModel():
