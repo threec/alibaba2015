@@ -6,6 +6,7 @@ usage summary.py modelname
 	
 import sklearn,pandas
 from sklearn.metrics import f1_score,precision_score,recall_score,confusion_matrix
+from sklearn.linear_model import  LogisticRegression
 import numpy as np 
 import util, sys 
 
@@ -24,6 +25,10 @@ def clf_summary(clf, feature_names=None):
 	# print clf
 	print 'best score', clf.best_score_
 	print 'best parms', clf.best_params_
+	
+	if not isinstance(clf, LogisticRegression):
+		print clf.best_estimator_
+		return
 	
 	print 'clf parms (%d features):' % len(clf.best_estimator_.coef_[0])
 	if feature_names is None:

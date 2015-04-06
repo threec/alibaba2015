@@ -5,7 +5,7 @@
 import sklearn,pandas, pickle, os, summary, util
 import numpy as np
 
-from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
 
@@ -94,7 +94,7 @@ _feature_names = [
 	"usergeo_item_before_lastday_star",
 	"usergeo_item_before_lastday_cart",
 	"usergeo_item_before_lastday_buy",
-
+	"user_item_geo_distance"
 
 
 	]
@@ -150,12 +150,12 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'C': np.logspace(-2,2,4),  # 
-	'gamma' : np.logspace(1e-3,1,4)
+	'n_estimators': range(5,len(_feature_names),5),  # 
+	#'gamma' : np.logspace(1e-3,1,4)
 	#'class_weight':[{0:1,1:r} for r in np.linspace(1,3,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
-	svc = svm.SVC()
-	clf = GridSearchCV(svc, parms, scoring='f1', n_jobs=16)
+	rf = RandomForestClassifier()
+	clf = GridSearchCV(rf, parms, scoring='f1', n_jobs=16)
 
 	clf.fit(X,Y)
 	

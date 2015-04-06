@@ -98,7 +98,7 @@ _feature_names = [
 	"usergeo_item_before_lastday_star",
 	"usergeo_item_before_lastday_cart",
 	"usergeo_item_before_lastday_buy",
-
+	"user_item_geo_distance"
 
 	]
 def GetFeature(data):
@@ -113,6 +113,7 @@ def GetFeature(data):
 		"user_item_buy_again",
 		"user_geo_b","user_geo_f","user_geo_i","user_geo_m","user_geo_o","user_geo_5","user_geo_4","user_geo_v","user_geo_9","user_geo_t",
 		"item_geo_9","item_geo_4","item_geo_m","item_geo_t","item_geo_f",
+		"user_item_geo_distance",
 	]
 	feature_names = [i for i in data.columns if i not in (nolog+factor_features + nolog2 + geo_features)]
 	
