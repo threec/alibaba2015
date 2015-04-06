@@ -26,7 +26,7 @@ def clf_summary(clf, feature_names=None):
 	print 'best score', clf.best_score_
 	print 'best parms', clf.best_params_
 	
-	if not isinstance(clf, LogisticRegression):
+	if not isinstance(clf.best_estimator_, LogisticRegression):
 		print clf.best_estimator_
 		return
 	
