@@ -60,12 +60,14 @@ def GeoSamePrefixLen(geo1, geo2):
 def GeoDistance(geo1, geo2):
 	return len(geo1) - GeoSamePrefixLen(geo1, geo2)
 
-def UserItemGeoDistance(user_geos, item_geos):  # 用户geo集合和物品geo集合的距离，算最短的那个
-	d = []
+def GeoSetDistance(user_geos, item_geos):  # geo集合的距离，算最短的那个
+	d = 100
 	for i in user_geos:
 		for j in item_geos:
-			d.append( GeoDistance(i, j) )
-	return min(d)
+			tmp = GeoDistance(i, j) 
+			if tmp < d:
+				d = tmp
+	return d
 
 
 	
