@@ -47,7 +47,28 @@ def GeoMatch(geo_hash, geo_list):
 	for i in range(max_len,0,-1):
 		if geo_hash[:i] in geo_set:
 			return geo_hash[:i]
-	
 
+def GeoSamePrefixLen(geo1, geo2):
+	assert len(geo1)==len(geo2)
+	L = len(geo1)
+	for i in range(L):
+		if geo1[i]!=geo2[i]:
+			break
+			
+	return i 
+	
+def GeoDistance(geo1, geo2):
+	return len(geo1) - GeoSamePrefixLen(geo1, geo2)
+
+def UserItemGeoDistance(user_geos, item_geos):  # 用户geo集合和物品geo集合的距离，算最短的那个
+	d = []
+	for i in user_geos:
+		for j in item_geos:
+			d.append( GeoDistance(i, j) )
+	return min(d)
+
+
+	
+	
 if __name__ == '__main__':
 	GetItemGeo()

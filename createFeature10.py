@@ -18,12 +18,19 @@ usergeo_item_before_lastday_star = dict()
 usergeo_item_before_lastday_cart = dict()
 usergeo_item_before_lastday_buy = dict()
 
+user_item_geo_distance = dict()
+
+user_item_geo_avg_distance = 4  # 平均距离，用户填充，后面会精确计算这个平均距离
+items_geo = com.GetItemGeo()
+
 
 geo_ids = set()
 geo_list = com.GetGeoTree().keys()
 user_geos = dict()
 
 geo_uids = dict()
+
+
 
 def IncDict(d, key):
 	if key in d:
@@ -213,6 +220,10 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			geodata = ['%.2e' % d for d in geodata]
 			
 			users_number = float(users_number) / len(user_geos[uid])
+		
+		# user item geo distance
+		
+		
 		
 		data = [uid, tid,
 	

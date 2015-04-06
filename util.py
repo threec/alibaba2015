@@ -27,11 +27,21 @@ def GetDict(d, key):
 		return d[key]
 	else:
 		return 0
+def AddToSetInDict(d, key, v):
+	''' append value to dict with key = key '''
+	if key not in d:
+		d[key] = set()
+	d[key].add(v)
+def GetSetFromDict(d, key):
+	if key not in d:
+		return set()
+	return d[key]
+	
+
 def DiffTime(t1, t2):
 	t1 = time.mktime(time.strptime(t1,'%Y-%m-%d %H'))
 	t2 = time.mktime(time.strptime(t2,'%Y-%m-%d %H'))
 	return t1 - t2
-
 
 def load_model_from_name(name):
 	

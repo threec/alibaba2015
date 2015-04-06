@@ -1,11 +1,11 @@
 # coding:utf-8
 '''
-增加了用户地理位置对商品的行为特征
+增加了用户地理位置对商品的行为特征，采用SVM
 '''
 import sklearn,pandas, pickle, os, summary, util
 import numpy as np
 
-from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
+from sklearn import svm
 from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
 
@@ -34,7 +34,6 @@ def GetData():
 	return X, Y
 	
 _feature_names = [
-	"geo_users_number",
 	"user_action_count",
 	"user_lastday_count",
 	"user_buy_count",
@@ -50,7 +49,6 @@ _feature_names = [
 	"user_add_car",
 	"user_add_star",
 	"item_added_car",
-	"item_added_start",
 	"user_item_lasttime",
 	"cat_add_car",
 	"cat_add_star",
@@ -76,12 +74,10 @@ _feature_names = [
 	"user_item_star_nobuy",
 	"user_item_cart_nobuy",
 	"user_item_buy_again",
-	"user_geo_b",
 	"user_geo_f",
 	"user_geo_m",
 	"user_geo_9",
 	"user_geo_t",
-	"item_geo_9",
 	"user_cat_aveThreeDayDelta_click",
 	"user_cat_aveThreeDayDelta_star",
 	"user_cat_aveThreeDayDelta_add_car",
@@ -98,6 +94,7 @@ _feature_names = [
 	"usergeo_item_before_lastday_star",
 	"usergeo_item_before_lastday_cart",
 	"usergeo_item_before_lastday_buy",
+
 
 
 	]
@@ -153,11 +150,12 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'C': np.logspace(-2,2,10),  # 
+	'C': np.logspace(-2,2,4),  # 
+	'gamma' : np.logspace(1e-3,1,4)
 	#'class_weight':[{0:1,1:r} for r in np.linspace(1,3,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
-	lr = LogisticRegression(penalty='l1')
-	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
+	svc = svm.SVC()
+	clf = GridSearchCV(svc, parms, scoring='f1', n_jobs=16)
 
 	clf.fit(X,Y)
 	
