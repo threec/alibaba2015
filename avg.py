@@ -3,7 +3,7 @@ import pandas
 import numpy as np
 
 
-def AvgData(fn):
+def AvgData(fn, log=False):
 	block_size = 100000
 	fr = pandas.read_csv(fn, iterator=True, chunksize=block_size)
 
@@ -14,6 +14,8 @@ def AvgData(fn):
 	for data in fr:
 		nrows = nrows + len(data)
 		rows = rows + np.sum( ~ pandas.isnull(data))
+		if log:
+			data = np.log(data)
 		if avg is None:
 			avg = np.sum(data)
 		else:
@@ -21,7 +23,9 @@ def AvgData(fn):
 			
 		print 'sum %d rows.' % nrows
 	avg = avg / rows
+	if log:
+		return np.exp(avg)
 	return avg
 
 if __name__ == '__main__':
-	print AvgData('feature10.csv')
+	print AvgData('feature10.csv', True)
