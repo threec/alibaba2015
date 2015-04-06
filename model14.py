@@ -150,7 +150,7 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'n_estimators': range(5,40,5),  # 
+	'n_estimators': range(20,40,5),  # 
 	'max_features' : range(5,8), #[8]
 	'min_samples_split' : [2], #range(2,6,2),
 	# "max_depth" : range(4,20,2)   # nothing
