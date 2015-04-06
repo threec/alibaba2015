@@ -150,9 +150,10 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'n_estimators': range(5,30,5),  # 
-	'max_features' : [10],
-	'min_samples_split' : range(2,10,2)
+	'n_estimators': range(5,40,5),  # 
+	'max_features' : range(5,8), #[8]
+	'min_samples_split' : [2], #range(2,6,2),
+	# "max_depth" : range(4,20,2)   # nothing
 	#'gamma' : np.logspace(1e-3,1,4)
 	#'class_weight':[{0:1,1:r} for r in np.linspace(1,3,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
