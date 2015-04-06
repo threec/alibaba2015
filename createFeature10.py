@@ -252,6 +252,9 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		
 	fd.close()	
 
+	avg = com.FillAvgData(foutput, log=True)
+	
+
 
 if __name__ == '__main__':
 	fid = util.file_basename_id(__file__)

@@ -97,7 +97,25 @@ def AvgData(fn, log=False):
 		return np.exp(avg)
 	return avg
 
+def FillAvgData(fn, fo, log=False):
+	avg = AvgData(fn, log)
+	block_size = 100000
+	fr = pandas.read_csv(fn, iterator=True, chunksize=block_size)
+	
+	mod = 'w'
+	header = True
+		
+	nrows = 0
+	for data in fr:
+		data.fillna(avg).to_csv(fo, mode=mod, header = header,index = False)
+		header = False
+		mod = 'a'
+		
+		nrows = nrows + len(data)
+		print 'fill %d rows.' % nrows
+	
+		
 	
 	
 if __name__ == '__main__':
-	GetItemGeo()
+	FillAvgData('feature10.csv','feature10.fill.csv')
