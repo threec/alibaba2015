@@ -61,11 +61,11 @@ def GeoDistance(geo1, geo2):
 	return len(geo1) - GeoSamePrefixLen(geo1, geo2)
 
 def GeoSetDistance(user_geos, item_geos):  # geo集合的距离，算最短的那个
-	d = 100
+	d = None
 	for i in user_geos:
 		for j in item_geos:
 			tmp = GeoDistance(i, j) 
-			if tmp < d:
+			if d is None or tmp < d:
 				d = tmp
 	return d
 
