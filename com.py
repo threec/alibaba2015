@@ -107,7 +107,7 @@ def FillAvgData(fn, fo, log=False):
 		
 	nrows = 0
 	for data in fr:
-		data.fillna(avg).to_csv(fo, mode=mod, header = header,index = False)
+		data.fillna(avg).to_csv(fo, mode=mod, header = header,index = False, float_format='%.2e')
 		header = False
 		mod = 'a'
 		

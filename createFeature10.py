@@ -168,7 +168,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	
 			
 	# user feature
-	fd = open(foutput,'wb')
+	fd = open('%s.tmp.csv' % foutput,'wb')
 	fw = csv.writer(fd, delimiter=',')
 
 	fw.writerow(['user_id', 'item_id',
@@ -252,7 +252,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		
 	fd.close()	
 
-	avg = com.FillAvgData(foutput, log=True)
+	com.FillAvgData('%s.tmp.csv' % foutput, foutput, log=True)  # 将空值用均值填充
 	
 
 
