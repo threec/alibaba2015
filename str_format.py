@@ -17,6 +17,7 @@ for k in m:
 	user = False
 	item = False
 	cat = False
+	ug = False
 	
 	if 'user' in w:
 		user = True
@@ -24,12 +25,16 @@ for k in m:
 		item = True
 	if 'cat' in w:
 		cat = True
+	if 'usergeo' in w:
+		ug = True
 	if user and item:
 		key = 'utid'
 	elif user and cat:
 		key = 'ucid'
 	elif item and cat:
 		key = 'icid'
+	elif item and ug:
+		key = 'ugtid'
 	elif user:
 		key = 'uid'
 	elif item:

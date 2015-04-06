@@ -5,16 +5,25 @@ import numpy as np
 
 
 
-# 特征生成文件9, item geo feature
-item_geo = com.GetItemGeo()
+# 特征生成文件10, item geo feature
+# 
+
+usergeo_item_lastday_click = dict()
+usergeo_item_lastday_star = dict()
+usergeo_item_lastday_cart = dict()
+usergeo_item_lastday_buy = dict()
+
+usergeo_item_before_lastday_click = dict()
+usergeo_item_before_lastday_star = dict()
+usergeo_item_before_lastday_cart = dict()
+usergeo_item_before_lastday_buy = dict()
 
 
 geo_ids = set()
-for v in item_geo.values():
-	for g in v:
-		geo_ids.add(g[:1])
-		
+geo_list = com.GetGeoTree().keys()
+user_geos = dict()
 
+geo_uids = dict()
 
 def IncDict(d, key):
 	if key in d:
@@ -90,6 +99,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			tid = row[1]
 			cid = row[4]
 			t = row[5]
+			behavior = row[2]
 			
 			utid = '%s_%s' % (uid, tid)
 			ucid = '%s_%s' % (uid, cid)
@@ -99,11 +109,45 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			
 			# diff_time = DiffTime('%s 00' % lastday, row[5]) + 24*24*3600
 			
+			geo_hash = row[3]
+			if geo_hash is np.nan:
+				continue
 			
+			geo_id = com.GeoMatch(geo_hash, geo_list)
+			ugtid = 'geo_%s_%s' % (geo_id, tid)
 			
+			if geo_id not in geo_uids:
+				geo_uids[geo_id] = set()
+			geo_uids[geo_id].add(uid)
 			
+			if uid not in user_geos:
+				user_geos[uid] = set()
+			user_geos[uid].add(geo_id)
+			
+			if row[5][:10]==lastday:  # lastday
+				if row[2] == '1': # click
+					IncDict(usergeo_item_lastday_click, ugtid)
+				elif row[2] == '2': # star
+					IncDict(usergeo_item_lastday_star, ugtid)
+				elif row[2] == '3': # add to car
+					IncDict(usergeo_item_lastday_cart, ugtid)
+				elif row[2] == '4':  # buy
+					IncDict(usergeo_item_lastday_buy, ugtid)
+			
+			else:
+				
+				if row[2] == '1': # click
+					IncDict(usergeo_item_before_lastday_click, ugtid)
+				elif row[2] == '2': # star
+					IncDict(usergeo_item_before_lastday_star, ugtid)
+				elif row[2] == '3': # add to car
+					IncDict(usergeo_item_before_lastday_cart, ugtid)
+				elif row[2] == '4':  # buy
+					IncDict(usergeo_item_before_lastday_buy, ugtid)
 				
 			i = i + 1
+			
+			
 			if i%100000==0:
 				# break
 				print 'processed %d scores!' % i
@@ -114,7 +158,21 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 	fd = open(foutput,'wb')
 	fw = csv.writer(fd, delimiter=',')
 
-	fw.writerow(['user_id', 'item_id'] + ['item_geo_%s' % i for i in geo_ids])
+	fw.writerow(['user_id', 'item_id',
+		"usergeo_item_lastday_click",
+		"usergeo_item_lastday_star",
+		"usergeo_item_lastday_cart",
+		"usergeo_item_lastday_buy",
+		"usergeo_item_before_lastday_click",
+		"usergeo_item_before_lastday_star",
+		"usergeo_item_before_lastday_cart",
+		"usergeo_item_before_lastday_buy",
+		
+		"geo_users_number",
+		
+	] )
+	
+	avggeodata = []
 	
 	for key in user_items:
 		uid, tid = key.split('_')
@@ -122,20 +180,43 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		utid = '%s_%s' % (uid, tid)
 		ucid = '%s_%s' % (uid, cid)
 			
+		users_number = 0
+		
+		if uid not in user_geos:  # 没有用户位置信息的用平均值填充
+			# print uid
+			geodata = avggeodata
+		else:		
+			geodata = np.zeros(8)
 			
-		if int(tid) not in item_geo:
-			geodata = [0 for g in geo_ids]
-		else:
-			geodata = []
-			# print item_geo[int(tid)]
-			for g in geo_ids:
-				if g not in [ig[:1] for ig in item_geo[int(tid)]]:
-					geodata.append(0)
-				else:
-					geodata.append(1)
-	
+			
+			for geo_id in user_geos[uid]:
+				ugtid = 'geo_%s_%s' % (geo_id, tid)
+				
+				if geo_id in geo_uids:
+					users_number = users_number + len(geo_uids[geo_id])
+			
+				
+				tmp = [
+					GetDict(usergeo_item_lastday_click, ugtid),
+					GetDict(usergeo_item_lastday_star, ugtid),
+					GetDict(usergeo_item_lastday_cart, ugtid),
+					GetDict(usergeo_item_lastday_buy, ugtid),
+					GetDict(usergeo_item_before_lastday_click, ugtid),
+					GetDict(usergeo_item_before_lastday_star, ugtid),
+					GetDict(usergeo_item_before_lastday_cart, ugtid),
+					GetDict(usergeo_item_before_lastday_buy, ugtid),
+				]
+				geodata = geodata + (np.array(tmp) + 1.0/len(geo_list)) / len(geo_uids[geo_id])  # 去除0均值
+				
+			
+			geodata = geodata / len(user_geos[uid]) 
+			geodata = ['%.2e' % d for d in geodata]
+			
+			users_number = float(users_number) / len(user_geos[uid])
+		
 		data = [uid, tid,
-			] + geodata
+	
+			] + geodata + [users_number]
 		
 		fw.writerow(data)
 		
