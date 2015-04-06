@@ -20,7 +20,7 @@ usergeo_item_before_lastday_buy = dict()
 
 user_item_geo_distance = dict()
 
-user_item_geo_avg_distance = 4  # 平均距离，用户填充，后面会精确计算这个平均距离
+user_item_geo_avg_distance = ''  # 平均距离，用户填充，后面会精确计算这个平均距离
 item_geohashs = com.GetItemGeo()
 user_geohashs = dict()
 
@@ -102,6 +102,15 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		
 		i = 0
 		for row in reader:
+			i = i + 1
+			
+			
+			if i%100000==0:
+				#break
+				print 'processed %d scores!' % i
+				
+				
+				
 			uid = row[0]
 			tid = row[1]
 			cid = row[4]
@@ -117,7 +126,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			# diff_time = DiffTime('%s 00' % lastday, row[5]) + 24*24*3600
 			
 			geo_hash = row[3]
-			if geo_hash is np.nan:
+			if geo_hash is np.nan or geo_hash is '':
 				continue
 			
 			util.AddToSetInDict(user_geohashs, uid, geo_hash)
@@ -154,12 +163,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 				elif row[2] == '4':  # buy
 					IncDict(usergeo_item_before_lastday_buy, ugtid)
 				
-			i = i + 1
 			
-			
-			if i%100000==0:
-				# break
-				print 'processed %d scores!' % i
 	
 	
 			
@@ -182,15 +186,16 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		
 	] )
 	
-	avggeodata = []
+	avggeodata = ['', '', '', '', '', '', '', '' ]
 	
+	i = 0
 	for key in user_items:
 		uid, tid = key.split('_')
 		cid = item_cat[tid]
 		utid = '%s_%s' % (uid, tid)
 		ucid = '%s_%s' % (uid, cid)
 			
-		users_number = 0
+		users_number = ''
 		
 		if uid not in user_geos:  # 没有用户位置信息的用平均值填充
 			# print uid
@@ -198,6 +203,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		else:		
 			geodata = np.zeros(8)
 			
+			users_number = 0 
 			
 			for geo_id in user_geos[uid]:
 				ugtid = 'geo_%s_%s' % (geo_id, tid)
@@ -225,10 +231,12 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			users_number = float(users_number) / len(user_geos[uid])
 		
 		# user item geo distance
-		if uid not in user_geohashs or tid not in item_geohashs:
+		#print uid not in user_geohashs or int(tid) not in item_geohashs
+		if uid not in user_geohashs or int(tid) not in item_geohashs:
 			geo_distance = user_item_geo_avg_distance
 		else:
-			geo_distance = GeoSetDistance(user_geohashs[uid], item_geohashs[tid])
+			#print 'got here!', (user_geohashs[uid], item_geohashs[int(tid)])
+			geo_distance = com.GeoSetDistance(user_geohashs[uid], item_geohashs[int(tid)])
 			
 		
 		
@@ -238,9 +246,9 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		
 		fw.writerow(data)
 		
-		i = i - 1 
+		i = i + 1 
 		if i%100000==0:
-			print 'left %d rows to write.' % i
+			print 'write %d rows to file.' % i
 		
 	fd.close()	
 
