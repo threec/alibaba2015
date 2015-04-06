@@ -21,8 +21,8 @@ usergeo_item_before_lastday_buy = dict()
 user_item_geo_distance = dict()
 
 user_item_geo_avg_distance = 4  # 平均距离，用户填充，后面会精确计算这个平均距离
-items_geo = com.GetItemGeo()
-
+item_geohashs = com.GetItemGeo()
+user_geohashs = dict()
 
 geo_ids = set()
 geo_list = com.GetGeoTree().keys()
@@ -120,6 +120,8 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			if geo_hash is np.nan:
 				continue
 			
+			util.AddToSetInDict(user_geohashs, uid, geo_hash)
+		
 			geo_id = com.GeoMatch(geo_hash, geo_list)
 			ugtid = 'geo_%s_%s' % (geo_id, tid)
 			
@@ -176,6 +178,7 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 		"usergeo_item_before_lastday_buy",
 		
 		"geo_users_number",
+		"user_item_geo_distance"
 		
 	] )
 	
@@ -222,14 +225,22 @@ def GenFeature(finput='user_action_train.csv', foutput = 'feature.csv', lastday 
 			users_number = float(users_number) / len(user_geos[uid])
 		
 		# user item geo distance
-		
+		if uid not in user_geohashs or tid not in item_geohashs:
+			geo_distance = user_item_geo_avg_distance
+		else:
+			geo_distance = GeoSetDistance(user_geohashs[uid], item_geohashs[tid])
+			
 		
 		
 		data = [uid, tid,
 	
-			] + geodata + [users_number]
+			] + geodata + [users_number, geo_distance]
 		
 		fw.writerow(data)
+		
+		i = i - 1 
+		if i%100000==0:
+			print 'left %d rows to write.' % i
 		
 	fd.close()	
 
