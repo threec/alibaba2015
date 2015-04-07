@@ -38,7 +38,7 @@ if __name__ == '__main__':
 	'C':np.logspace(-6,0,10),
 	#'class_weight':[{0:1,1:200}] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
-	lr = LogisticRegression()
+	lr = LogisticRegression(penalty="l1")
 	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
 
 	clf.fit(X,Y)

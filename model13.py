@@ -8,7 +8,8 @@ import numpy as np
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
-
+from sklearn.svm import LinearSVC
+from sklearn.pipeline import Pipeline
 
 __fname__ = os.path.basename(__file__)
 __fname__ = __fname__[:__fname__.rindex('.')]
@@ -134,7 +135,9 @@ def GetFeature(data):
 	X = pandas.concat([X1, X2, X3, X4, X5], axis=1)
 	
 	
-	
+	# transformer = sklearn.preprocessing.MinMaxScaler()
+	# X = transformer.fit_transform(X[_feature_names])
+
 	return X[_feature_names]
 
 		
@@ -157,8 +160,14 @@ if __name__ == '__main__':
 	'C': np.logspace(-2,2,10),  # 
 	#'class_weight':[{0:1,1:r} for r in np.linspace(1,3,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
+	#transformer = sklearn.preprocessing.MinMaxScaler()
 	lr = LogisticRegression(penalty='l1')
+	
 	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
+
+	
+	
+	
 
 	clf.fit(X,Y)
 	

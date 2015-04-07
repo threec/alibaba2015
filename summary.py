@@ -47,9 +47,41 @@ def TestModel(modelname):
 	model = util.load_model_from_name(modelname)
 	clf = model.GetModel()
 	
-	print '===== for test ====='
+	
+	print '===== for train ====='
 	
 	block_size = 10000
+	reader = pandas.read_csv('data.train.origin.csv', iterator=True, chunksize=block_size)
+	TP = 0.
+	TN = 0.
+	FP = 0.
+	FN = 0.
+	for data in reader:
+		X_test = model.GetFeature(data).as_matrix()
+		Y_test = data['buy'].as_matrix()
+		pred = clf.predict(X_test)
+		
+		TP = TP + np.sum(Y_test * pred)
+		TN = TN + np.sum((1-Y_test) * pred)
+		FP = FP + np.sum(Y_test * (1 - pred))
+		FN = FN + np.sum((1-Y_test) * (1 - pred))
+	
+	print ' \tF\tT'
+	print 'N\t%d\t%d' % (FN, TN)
+	print 'P\t%d\t%d' % (FP, TP)
+	print ''
+	
+	P = TP/(TP + TN)
+	R = TP/(TP + FP)
+	
+	F1 = 2*P*R/(P+R)
+	print 'F1\tP\tR'
+	print '%.2f\t%.2f\t%.2f' % (F1*100, P*100, R*100)
+	
+	
+	print '===== for test ====='
+	
+	
 	reader = pandas.read_csv('data.test.csv', iterator=True, chunksize=block_size)
 	TP = 0.
 	TN = 0.

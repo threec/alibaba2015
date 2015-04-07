@@ -25,12 +25,14 @@ rows = 0
 fname1 = 'data.train.csv'
 fname2 = 'data.test.csv'
 fname3 = 'data.onlinetest.csv'
+fname4 = 'data.train.origin.csv'
 
 items = GetRecItems()
 
 for data in reader:
 	
 	spl = np.random.rand(len(data))<.6  # train : test = 6:4
+	
 	train = spl & ((data['buy']==1) | (np.random.rand(len(data))<.045)) # 0.045
 	test = spl == False 
 	
@@ -45,6 +47,7 @@ for data in reader:
 	data[train].to_csv(fname1, mode=mod, header = header,index = False)
 	data[test].to_csv(fname2, mode=mod, header = header,index = False)
 	data[onlinetest].to_csv(fname3, mode=mod, header = header,index = False)
+	data[spl].to_csv(fname4, mode=mod, header = header,index = False)
 	
 	header = False
 	mod = 'a'

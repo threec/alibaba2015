@@ -1,16 +1,16 @@
 # coding:utf-8
 '''
-增加了用户地理位置对商品的行为特征，采用SVM
+和模型12使用相同的特征，但是使用了SVM模型
 '''
 import sklearn,pandas, pickle, os, summary, util
 import numpy as np
 
-from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.grid_search import GridSearchCV
+from sklearn.svm import LinearSVC,SVC
+from sklearn.feature_selection import SelectKBest, chi2, f_classif
 from sklearn.pipeline import Pipeline
-from sklearn.linear_model import  LogisticRegression
-
 
 __fname__ = os.path.basename(__file__)
 __fname__ = __fname__[:__fname__.rindex('.')]
@@ -26,7 +26,7 @@ def GetData():
 	
 	
 	
-	rand = np.random.rand(len(Y))<0.75*4/4.5
+	rand = np.random.rand(len(Y))<0.75
 	idx = (Y==1) | ((Y==0) & rand)
 	
 	X = X[idx]
@@ -36,11 +36,13 @@ def GetData():
 	return X, Y
 	
 _feature_names = [
+	"geo_users_number",
 	"user_action_count",
 	"user_lastday_count",
 	"user_buy_count",
 	"item_click_count",
 	"item_lastday_count",
+	"item_buy_count",
 	"cat_click_count",
 	"cat_buy_count",
 	"user_cat_count",
@@ -49,18 +51,47 @@ _feature_names = [
 	"user_item_lastday_count",
 	"user_add_car",
 	"user_add_star",
+	"item_added_car",
+	"item_added_start",
+	"user_item_lasttime",
 	"cat_add_car",
 	"cat_add_star",
+	"user_item_buy",
 	"user_item_before_halfmonth_click",
+	"user_item_before_halfmonth_star",
+	"user_item_before_halfmonth_add_car",
+	"user_item_before_halfmonth_buy",
 	"user_cat_before_halfmonth_click",
 	"user_cat_before_halfmonth_add_car",
+	"user_cat_before_halfmonth_buy",
 	"user_lastday_add_star",
+	"user_item_lastday_add_star",
+	"user_cat_lastday_add_star",
 	"user_lastday_add_cart",
 	"user_item_lastday_add_cart",
+	"user_cat_lastday_add_cart",
 	"user_lastday_buy",
+	"user_item_lastday_buy",
+	"user_cat_lastday_buy",
+	"item_convert_rate",
+	"user_item_click_nobuy",
+	"user_item_star_nobuy",
+	"user_item_cart_nobuy",
+	"user_item_buy_again",
+	"user_geo_b",
+	"user_geo_f",
+	"user_geo_m",
+	"user_geo_9",
+	"user_geo_t",
+	"item_geo_9",
 	"user_cat_aveThreeDayDelta_click",
+	"user_cat_aveThreeDayDelta_star",
+	"user_cat_aveThreeDayDelta_add_car",
+	"user_cat_aveThreeDayDelta_buy",
 	"user_item_aveThreeDayDelta_click",
+	"user_item_aveThreeDayDelta_star",
 	"user_item_aveThreeDayDelta_add_car",
+	"user_item_aveThreeDayDelta_buy",
 	"usergeo_item_lastday_click",
 	"usergeo_item_lastday_star",
 	"usergeo_item_lastday_cart",
@@ -69,6 +100,7 @@ _feature_names = [
 	"usergeo_item_before_lastday_star",
 	"usergeo_item_before_lastday_cart",
 	"usergeo_item_before_lastday_buy",
+	"user_item_geo_distance"
 
 	]
 def GetFeature(data):
@@ -83,6 +115,7 @@ def GetFeature(data):
 		"user_item_buy_again",
 		"user_geo_b","user_geo_f","user_geo_i","user_geo_m","user_geo_o","user_geo_5","user_geo_4","user_geo_v","user_geo_9","user_geo_t",
 		"item_geo_9","item_geo_4","item_geo_m","item_geo_t","item_geo_f",
+		"user_item_geo_distance",
 	]
 	feature_names = [i for i in data.columns if i not in (nolog+factor_features + nolog2 + geo_features)]
 	
@@ -105,6 +138,7 @@ def GetFeature(data):
 	
 	
 	return X[_feature_names]
+
 		
 def GetModel():
 	
@@ -122,15 +156,14 @@ if __name__ == '__main__':
 
 	feature_names = X.columns
 	parms = {
-	'n_estimators': range(20,40,5),  # 
-	'max_features' : [6], #[7]
-	'min_samples_leaf' : [4], #range(,6,2),
-	"max_depth" : [6], #range(4,10,2)   # nothing
-	#'gamma' : np.logspace(1e-3,1,4)
+	'C': [30,100,300,1e3], #np.logspace(-2,2,10),  # 
 	#'class_weight':[{0:1,1:r} for r in np.linspace(1,3,10)] #[{0:1,1:50},{0:1,1:70},{0:1,1:85},{0:1,1:100},{0:1,1:120},{0:1,1:150}]
 	}
-	rf = RandomForestClassifier()
-	clf = GridSearchCV(rf, parms, scoring='f1', n_jobs=16)
+	#sl = SelectKBest(f_classif, k=33)
+	lr = LinearSVC(penalty='l1', dual=False)
+	#pipe = Pipeline([('select', sl),('lr',lr)])
+	
+	clf = GridSearchCV(lr, parms, scoring='f1', n_jobs=10)
 
 	clf.fit(X,Y)
 	
